@@ -70,10 +70,11 @@ def save_todos(listrecord: Read_from_file, current_task: str):
     todolist = listrecord.task_names
     start = listrecord.start_index
     end = listrecord.end_index
-    todolist = [i[:-1] for i in todolist]
+    todolist = [i.removesuffix("\n") for i in todolist]
     # print(todolist)
-    current_task = current_task[0:-1]
+    current_task = current_task.removesuffix("\n")
     # print(current_task)
+    print(f"{todolist = }, {current_task = }")
     todolist.remove(current_task)
     # print(orignal[:start + 2])
     # print(orignal[end:])
@@ -84,7 +85,7 @@ def save_todos(listrecord: Read_from_file, current_task: str):
     )
     with open("plan.md", "w", encoding="utf-8") as f:
         for i in orignal:
-            print(i, file=f)
+            print(i, file=f, end="")
 
 
 def save_record(Record: Record):
@@ -164,31 +165,29 @@ def main():
             if not current_task:
                 print("没有任务在执行")
                 continue
-        if start_time is not None:
-            end_time = datetime.now()
-            task_finished.append(Record(current_task, start_time, end_time))
-            save_todos(todo_listrecord, current_task)
-            todo_list.remove(current_task)
-            print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
-            if is_ddl:
-                save_new_ddl(ddl_name, current_task)
-                is_ddl = False
-            current_task = ""
-            print_todos(todo_list)
-            print_and_return_ddl(ddl_name)
+            if start_time is not None:
+                end_time = datetime.now()
+                task_finished.append(Record(current_task, start_time, end_time))
+                save_todos(todo_listrecord, current_task)
+                todo_list.remove(current_task)
+                print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
+                if is_ddl:
+                    save_new_ddl(ddl_name, current_task)
+                    is_ddl = False
+                current_task = ""
+                print_todos(todo_list)
+                print_and_return_ddl(ddl_name)
         elif command == "q":
             if not current_task:
                 print("没有任务在执行")
                 break
             end_time = datetime.now()
-        if (
-            start_time is not None and end_time and end_time is not None  # type: ignore
-        ):
-            task_finished.append(Record(current_task, start_time, end_time))
-            save_todos(todo_listrecord, current_task)
-            todo_list.remove(current_task)
-            print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
-            break
+            if start_time is not None:
+                task_finished.append(Record(current_task, start_time, end_time))
+                save_todos(todo_listrecord, current_task)
+                todo_list.remove(current_task)
+                print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
+                break
         elif command == "b":
             if current_task:
                 print(f"撤回成功")
@@ -216,14 +215,14 @@ def main():
                 print("没有任务在执行")
                 continue
             end_time = datetime.now()
-        if start_time is not None:
-            task_finished.append(Record(current_task, start_time, end_time))  # type: ignore
-            todo_list.remove(current_task)
-            print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")  # type: ignore
-            is_ddl = False
-            current_task = ""
-            print_todos(todo_list)
-            print_and_return_ddl(ddl_name)
+            if start_time is not None:
+                task_finished.append(Record(current_task, start_time, end_time))
+                todo_list.remove(current_task)
+                print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
+                is_ddl = False
+                current_task = ""
+                print_todos(todo_list)
+                print_and_return_ddl(ddl_name)
         else:
             print("无效指令")
     newtime = time.localtime(time.time())
