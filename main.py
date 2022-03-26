@@ -247,9 +247,7 @@ def main():
             start_time = datetime.now()
         else:
             print("无效指令")
-    newtime = time.localtime(time.time())
-    recording = f"{newtime[1]}.{newtime[2]}"
-    with open(str(recording) + ".csv", "a") as record:
+    with open(date.today().isoformat()+ ".csv", "a") as record:
         for i in task_finished:
             record.write(save_record(i))
 
