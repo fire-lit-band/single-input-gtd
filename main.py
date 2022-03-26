@@ -90,10 +90,11 @@ def save_todos(listrecord: Read_from_file, current_task: str):
 
 def save_record(Record: Record):
     a = Record.task_name
+    a=a.removesuffix('\n')
     b = Record.start_time
     c = Record.end_time
     d=c-b
-    return a[:-1] + "," + b.strftime("%X") + "," + c.strftime("%X") +','+str(d)+"\n"
+    return a + "," + b.strftime("%X") + "," + c.strftime("%X") +','+str(d)+"\n"
 
 
 def print_todos(todo_list: TodoList):
@@ -186,6 +187,7 @@ def main():
             if start_time is not None:
                 task_finished.append(Record(current_task, start_time, end_time))
                 save_todos(todo_listrecord, current_task)
+                todo_list.remove(current_task)
                 print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
                 break
         elif command == "b":
@@ -202,8 +204,8 @@ def main():
             if command.isdigit():
                 num = int(command)
                 if 0 <= num <= len(ddllist) - 1:
-                    todo_list.append(ddllist[num])
                     current_task = ddllist[num]
+                    todo_list.append(current_task)
                     print(f"开始执行: {current_task}")
                     start_time = datetime.now()
                 else:
@@ -217,17 +219,35 @@ def main():
             end_time = datetime.now()
             if start_time is not None:
                 task_finished.append(Record(current_task, start_time, end_time))
-                todo_list.remove(current_task)
                 print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
-                is_ddl = False
                 current_task = ""
                 print_todos(todo_list)
                 print_and_return_ddl(ddl_name)
+        elif command == "rest":
+            if current_task:
+                end_time = datetime.now()
+                if start_time is not None:
+                    task_finished.append(Record(current_task, start_time, end_time))
+                    print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
+            command = input("请输入现在要去做什么 ")
+            current_task ='rest:'+command
+            todo_list.append(current_task)
+            print(f"开始执行: {current_task}")
+            start_time = datetime.now()
+        elif command=='!' or command=='！':
+            if current_task:
+                end_time = datetime.now()
+                if start_time is not None:
+                    task_finished.append(Record(current_task, start_time, end_time))
+                    print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
+            command=input("请输入当前的紧急事情or立刻要去做的事情： ")
+            current_task=command
+            todo_list.append(current_task)
+            print(f"开始执行: {current_task}")
+            start_time = datetime.now()
         else:
             print("无效指令")
-    newtime = time.localtime(time.time())
-    recording = f"{newtime[1]}.{newtime[2]}"
-    with open(str(recording) + ".csv", "a") as record:
+    with open(date.today().isoformat()+ ".csv", "a") as record:
         for i in task_finished:
             record.write(save_record(i))
 
