@@ -67,7 +67,7 @@ def save_record(Record):
     a = Record.task_name
     b = Record.start_time
     c = Record.end_time
-    return a[:-1] + ',' + b.strftime("%X") + ',' + b.strftime("%X") + '\n'
+    return a[:-1] + "," + b.strftime("%X") + "," + c.strftime("%X") +','+str(d)+"\n"
 
 
 def print_todos(todo_list):
