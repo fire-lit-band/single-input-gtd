@@ -186,7 +186,6 @@ def main():
             if start_time is not None:
                 task_finished.append(Record(current_task, start_time, end_time))
                 save_todos(todo_listrecord, current_task)
-                todo_list.remove(current_task)
                 print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
                 break
         elif command == "b":
