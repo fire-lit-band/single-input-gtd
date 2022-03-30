@@ -1,10 +1,12 @@
 import os
 import time
+
+#import easygui
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, time,datetime
 from pathlib import Path
 from typing import List, Union
-
+from clock import *
 import pandas as pd
 
 FilePath = Union[str, bytes, os.PathLike]
@@ -20,6 +22,21 @@ TODO_PREFIX = "- [ ] "
 HINT = '输入任务标号以开始对应任务，输入 "ok" 以结束任务： '
 
 orignal: List[str] = []
+
+def run_a_clock(current_task):
+    g=input('是否需要一个倒计时(y/n)')
+    if g=='n' or g=='':
+        return None
+    if not current_task:
+        print("没有任务在执行")
+        return None
+    command = input("请输入时间")
+    if command.isdigit():
+        clock(current_task, int(command))
+    else:
+        print("输入错误")
+        command = 'clock'
+        return None
 
 
 @dataclass
@@ -161,6 +178,7 @@ def main():
                 current_task = todo_list[num]
                 print(f"开始执行: {current_task[:-1]}")
                 start_time = datetime.now()
+                run_a_clock(current_task)
             else:
                 print("任务不在列表里")
         elif command == "ok":
@@ -208,6 +226,7 @@ def main():
                     todo_list.append(current_task)
                     print(f"开始执行: {current_task}")
                     start_time = datetime.now()
+                    run_a_clock(current_task)
                 else:
                     print("任务不在列表里")
             else:
@@ -233,6 +252,7 @@ def main():
             current_task ='rest:'+command
             todo_list.append(current_task)
             print(f"开始执行: {current_task}")
+            run_a_clock(current_task)
             start_time = datetime.now()
         elif command=='!' or command=='！':
             if current_task:
@@ -245,6 +265,7 @@ def main():
             todo_list.append(current_task)
             print(f"开始执行: {current_task}")
             start_time = datetime.now()
+            run_a_clock(current_task)
         else:
             print("无效指令")
     with open(date.today().isoformat()+ ".csv", "a") as record:
