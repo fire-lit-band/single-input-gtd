@@ -7,6 +7,8 @@ plan.md的使用需要结合obsidain的看板功能，且to do那一行不能修
 ddl.csv是用于ddl的记录的（以后应该会另外出一个程序用于记录ddl的时间和内容，目前只支持自己手动输入，而且记住要用记事本打开，excel打开容易出问题）
 另外每一天会生成一个当天日期的文件
 ddl.csv用于增加未来你的ddl
+env.bat(windows使用)在你安装anaconda之后，就可以直接帮你配置好环境
+run.bat(windows)在你运行完env.bat后可以直接使用，用来运行python程序，界面大一点，好看一些
 在使用程序的时需要python的pandas库，直接安装anaconda或者自己pip都可以
 # 目前有的功能是
 main.py  
