@@ -268,7 +268,7 @@ def main():
             run_a_clock(current_task)
         else:
             print("无效指令")
-    with open(date.today().isoformat()+ ".csv", "a") as record:
+    with open('./time_record/'+date.today().isoformat()+ ".csv", "a") as record:
         for i in task_finished:
             record.write(save_record(i))
 
