@@ -161,8 +161,9 @@ def main():
     start_time = None
     is_ddl = False
 
-    print_todos(todo_list)
     print_and_return_ddl(ddl_name)
+    print_todos(todo_list)
+
 
     while True:
         if len(todo_list) == 0:
@@ -266,6 +267,14 @@ def main():
             print(f"开始执行: {current_task}")
             start_time = datetime.now()
             run_a_clock(current_task)
+        elif command==' ':#这里是打算弄刷新功能，重新读取已经更新的文档
+            if current_task:
+                print("当前还在执行任务，请结束该任务后进行刷新")
+                continue
+            todo_listrecord: Read_from_file = read_todos()
+            todo_list = todo_listrecord.task_names
+            print_and_return_ddl(ddl_name)
+            print_todos(todo_list)
         else:
             print("无效指令")
     with open('./time_record/'+date.today().isoformat()+ ".csv", "a") as record:
