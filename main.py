@@ -24,14 +24,13 @@ HINT = '输入任务标号以开始对应任务，输入 "ok" 以结束任务：
 orignal: List[str] = []
 
 def run_a_clock(current_task):
-    g=input('是否需要一个倒计时(y/n)')
-    if g=='n' or g=='':
-        return None
     if not current_task:
         print("没有任务在执行")
         return None
-    command = input("请输入时间")
-    if command.isdigit():
+    command = input("请输入时间，不输入请直接回车")
+    if command=='':
+        return None
+    elif command.isdigit():
         clock(current_task, int(command))
     else:
         print("输入错误")
@@ -170,7 +169,7 @@ def main():
             print("没任务了，块点添加吧")
             break
         command = input(HINT)
-        if command.isdigit():
+        if command.isdigit():  #下面这些是为了开始任务的（从无到有）
             if current_task:
                 print(f"正在执行{current_task}")
                 continue
@@ -182,39 +181,6 @@ def main():
                 run_a_clock(current_task)
             else:
                 print("任务不在列表里")
-        elif command == "ok":
-            if not current_task:
-                print("没有任务在执行")
-                continue
-            if start_time is not None:
-                end_time = datetime.now()
-                task_finished.append(Record(current_task, start_time, end_time))
-                save_todos(todo_listrecord, current_task)
-                todo_list.remove(current_task)
-                print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
-                if is_ddl:
-                    save_new_ddl(ddl_name, current_task)
-                    is_ddl = False
-                current_task = ""
-                print_todos(todo_list)
-                print_and_return_ddl(ddl_name)
-        elif command == "q":
-            if not current_task:
-                print("没有任务在执行")
-                break
-            end_time = datetime.now()
-            if start_time is not None:
-                task_finished.append(Record(current_task, start_time, end_time))
-                save_todos(todo_listrecord, current_task)
-                todo_list.remove(current_task)
-                print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
-                break
-        elif command == "b":
-            if current_task:
-                print(f"撤回成功")
-                current_task = ""
-            else:
-                print(f"当前无任务，请重新输入")
         elif command == "due":
             ddllist: List = print_and_return_ddl(ddl_name, False)  # type: ignore
             command = input("选择你要进行的ddl")
@@ -232,18 +198,7 @@ def main():
                     print("任务不在列表里")
             else:
                 print("无效指令")
-        elif command == "wait":
-            if not current_task:
-                print("没有任务在执行")
-                continue
-            end_time = datetime.now()
-            if start_time is not None:
-                task_finished.append(Record(current_task, start_time, end_time))
-                print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
-                current_task = ""
-                print_todos(todo_list)
-                print_and_return_ddl(ddl_name)
-        elif command == "rest":
+        elif command == "rest": #结束当前，开始下一项
             if current_task:
                 end_time = datetime.now()
                 if start_time is not None:
@@ -267,6 +222,54 @@ def main():
             print(f"开始执行: {current_task}")
             start_time = datetime.now()
             run_a_clock(current_task)
+        elif command == "wait": #结束当前，开始下一项
+            if not current_task:
+                print("没有任务在执行")
+                continue
+            end_time = datetime.now()
+            if start_time is not None:
+                task_finished.append(Record(current_task, start_time, end_time))
+                print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
+                current_task = ""
+                print_todos(todo_list)
+                print_and_return_ddl(ddl_name)
+        elif command == "ok":  #这边是关于结束当前任务的
+            if not current_task:
+                print("没有任务在执行")
+                continue
+            if start_time is not None:
+                end_time = datetime.now()
+                task_finished.append(Record(current_task, start_time, end_time))
+                save_todos(todo_listrecord, current_task)
+                todo_list.remove(current_task)
+                print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
+                if is_ddl:
+                    save_new_ddl(ddl_name, current_task)
+                    is_ddl = False
+                current_task = ""
+                print_todos(todo_list)
+                print_and_return_ddl(ddl_name)
+        elif command == "q": # 结束当前并且推出的
+            if not current_task:
+                print("没有任务在执行")
+                break
+            end_time = datetime.now()
+            if start_time is not None:
+                task_finished.append(Record(current_task, start_time, end_time))
+                save_todos(todo_listrecord, current_task)
+                todo_list.remove(current_task)
+                print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
+                break
+
+        elif command == "b":#下面的是一些其他功能，比如这个是撤回
+            if current_task:
+                print(f"撤回成功")
+                current_task = ""
+            else:
+                print(f"当前无任务，请重新输入")
+        elif command=='clock':
+            run_a_clock(current_task)
+
         elif command==' ':#这里是打算弄刷新功能，重新读取已经更新的文档
             if current_task:
                 print("当前还在执行任务，请结束该任务后进行刷新")
@@ -278,9 +281,17 @@ def main():
         else:
             print("无效指令")
     with open('./time_record/'+date.today().isoformat()+ ".csv", "a") as record:
+        describe = 'project,start_time,end_time,total_time\n'
+        record.write(describe)
         for i in task_finished:
             record.write(save_record(i))
 
 
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        with open('./time_record/' + date.today().isoformat() + ".csv", "a") as record:
+            for i in task_finished:
+                record.write(save_record(i))
