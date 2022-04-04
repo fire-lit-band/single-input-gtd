@@ -2,12 +2,12 @@ def process_time(string):
     a=string.split(":")
     return int(a[0])*3600+int(a[1])*60+int(a[2])
 def basetime():
-    g=datetime.combine(datetime.today(),time(hour=0, minute=0, second=0))
+    g=datetime.combine(datetime.today(),time(hour=7, minute=0, second=0))
     while g<=datetime.combine(datetime.today(),time(hour=23, minute=59, second=59)):
         yield g
         g= g + timedelta(seconds=1)
 def resulttime(start,end):
-    g = datetime.combine(datetime.today(), time(hour=0, minute=0, second=0))
+    g = datetime.combine(datetime.today(), time(hour=7, minute=0, second=0))
     control=0
     while g <= datetime.combine(datetime.today(), time(hour=23, minute=59, second=59)):
         if g in start or g in end:
@@ -47,4 +47,6 @@ ax.xaxis.set_major_locator(mdates.HourLocator(interval=4))
 pl.fill(base,result)
 ax.set_aspect(0.05)
 pl.rcParams['figure.figsize'] = (200.0, 200.0)
+pl.savefig('./time_record/' + date.today().isoformat() + ".jpg")
 pl.show()
+
