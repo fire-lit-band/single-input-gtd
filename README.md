@@ -1,7 +1,10 @@
 # single-input-gtd
+
 目前来看windows版本是可用的，然后linux也是可以的，mac版本估计应该也可以
 使用环境是python3.9
+
 # 用前提醒
+
 main.py是主程序  
 plan.md的使用需要结合obsidain的看板功能，且to do那一行不能修改标题（以后应该会出plan.md的使用方法）  
 ddl.csv是用于ddl的记录的 
@@ -10,7 +13,9 @@ add_ddl.py用于增加未来你的ddl
 env.bat(windows使用)在你安装anaconda之后，就可以直接帮你配置好环境
 run.bat(windows)在你运行完env.bat后可以直接使用，用来运行python程序，界面大一点，好看一些
 在使用程序的时需要python的pandas库，直接安装anaconda或者自己pip都可以
+
 # 目前有的功能是
+
 main.py  
 进入界面显示你今天的todo项目和即将到来的ddl  
 输入due进行ddl事项的任务（输入due后输入ddl的序号进行序号对应项目的内容）  
@@ -35,7 +40,9 @@ add_ddl.py
 输入完成后可以进行下一项ddl的输入 
 huatu.py
 可以将你的时间使用可视化（但是比较简单，未来准备完善）
+
 # 未来打算增加的功能
+
 1. 进行项目时的comment（附带在项目上） 
 2. 灵感的记录（memo式），把零碎的点子和未来要做但不紧急的事情记录下来 
 3. code reconstruct 目前的代码的效率和可读性都太差，很多地方都可以code reuse，在后续版本中将进行相关的升级 
@@ -46,4 +53,4 @@ huatu.py
 8. sm plan的导入
 9. 所有内容的交互界面的优化
 10. 通过软件可以查看你摸鱼的时间（自动化统计，估计之后先用manictime先导出）
-11.在讲项目移动到to do时可以知道这个项目的原本的父节点是什么
+11. 在讲项目移动到to do时可以知道这个项目的原本的父节点是什么
