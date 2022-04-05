@@ -104,7 +104,7 @@ def save_todos(listrecord: Read_from_file, current_task: str):
             print(i, file=f, end="")
 
 
-def save_record(Record: Record):
+def save_format(Record: Record):
     a = Record.task_name
     a=a.removesuffix('\n')
     b = Record.start_time
@@ -145,6 +145,9 @@ def print_and_return_ddl(keyword: FilePath, ifinitial: bool = True):
             print(f"{i}. {dd}")
         return ddl.project
 
+def save_record(task_finished):
+    with open('./time_record/'+date.today().isoformat()+ ".csv", "a") as record:
+        record.write(save_format(task_finished))
 
 def save_new_ddl(keyword: FilePath, current: str):
     ddl = pd.read_csv(keyword)  # type: ignore
@@ -153,6 +156,10 @@ def save_new_ddl(keyword: FilePath, current: str):
 
 
 def main():
+    if not os.path.exists('./time_record/' + date.today().isoformat() + ".csv"):
+        with open('./time_record/' + date.today().isoformat() + ".csv", "w") as record:
+            describe = 'project,start_time,end_time,total_time\n'
+            record.write(describe)
     todo_listrecord: Read_from_file = read_todos()
     todo_list = todo_listrecord.task_names
     task_finished: List[Record] = []
@@ -204,6 +211,7 @@ def main():
                 if start_time is not None:
                     task_finished.append(Record(current_task, start_time, end_time))
                     print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
+                    save_record(Record(current_task, start_time, end_time))
             command = input("请输入现在要去做什么 ")
             current_task ='rest:'+command
             todo_list.append(current_task)
@@ -215,6 +223,7 @@ def main():
                 end_time = datetime.now()
                 if start_time is not None:
                     task_finished.append(Record(current_task, start_time, end_time))
+                    save_record(Record(current_task, start_time, end_time))
                     print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
             command=input("请输入当前的紧急事情or立刻要去做的事情： ")
             current_task=command
@@ -229,6 +238,7 @@ def main():
             end_time = datetime.now()
             if start_time is not None:
                 task_finished.append(Record(current_task, start_time, end_time))
+                save_record(Record(current_task, start_time, end_time))
                 print(f"暂时用时: {current_task}, 用时{(end_time - start_time)}")
                 current_task = ""
                 print_todos(todo_list)
@@ -240,6 +250,7 @@ def main():
             if start_time is not None:
                 end_time = datetime.now()
                 task_finished.append(Record(current_task, start_time, end_time))
+                save_record(Record(current_task, start_time, end_time))
                 save_todos(todo_listrecord, current_task)
                 todo_list.remove(current_task)
                 print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
@@ -256,6 +267,7 @@ def main():
             end_time = datetime.now()
             if start_time is not None:
                 task_finished.append(Record(current_task, start_time, end_time))
+                save_record(Record(current_task, start_time, end_time))
                 save_todos(todo_listrecord, current_task)
                 todo_list.remove(current_task)
                 print(f"完成任务: {current_task}, 用时{(end_time - start_time)}")
@@ -280,17 +292,14 @@ def main():
             print_todos(todo_list)
         else:
             print("无效指令")
-    with open('./time_record/'+date.today().isoformat()+ ".csv", "a") as record:
-        describe = 'project,start_time,end_time,total_time\n'
-        record.write(describe)
-        for i in task_finished:
-            record.write(save_record(i))
+    return task_finished
+
 
 
 
 if __name__ == "__main__":
     try:
-        main()
+        task_finished=main()
     except KeyboardInterrupt:
         with open('./time_record/' + date.today().isoformat() + ".csv", "a") as record:
             for i in task_finished:
