@@ -1,0 +1,59 @@
+{
+  "todo": [
+    {
+      "assignedTo": {
+        "name": "jingjianjie"
+      },
+      "creation_time": "2022-05-05T14:20:03.352Z",
+      "description": {
+        "content": "设计一个 scene 类使其支持不同场景的互动",
+        "mime": "text/markdown"
+      },
+      "id": "2",
+      "prio": 0,
+      "references": [],
+      "title": "【架构】scene类的定义",
+      "type": "bug"
+    },
+    {
+      "assignedTo": {
+        "name": "jingjianjie"
+      },
+      "creation_time": "2022-05-05T14:20:30.425Z",
+      "id": "3",
+      "prio": 0,
+      "references": [],
+      "title": "【架构】Task类定义",
+      "type": "bug"
+    },
+    {
+      "assignedTo": {
+        "name": "jingjianjie"
+      },
+      "creation_time": "2022-05-05T14:19:20.643Z",
+      "description": {
+        "content": "设计状态机的架构使其支持不同场景下的使用",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "prio": 0,
+      "references": [],
+      "title": "【架构】状态机开发"
+    }
+  ],
+  "in-progress": [
+    {
+      "assignedTo": {
+        "name": "jingjianjie"
+      },
+      "creation_time": "2022-05-05T14:21:13.285Z",
+      "id": "4",
+      "prio": 0,
+      "references": [],
+      "title": "【架构】梳理当前的状态转移图",
+      "type": "bug"
+    }
+  ],
+  "testing": [],
+  "done": []
+}
