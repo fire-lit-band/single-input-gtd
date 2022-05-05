@@ -17,7 +17,7 @@ class ddl(Task):
     def Cram(self):
         print(self.name+" "+self.timeLimit+self.activity)
 
-class UI():
+class UI(2):
     command:str=None
     def isShow(self):
         pass
