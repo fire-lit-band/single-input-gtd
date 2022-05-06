@@ -1,0 +1,22 @@
+[
+    {
+        "name":"project 1",
+        "sub_tasks": {"count": 6, "contens": [] },
+        "start_time":"2022-04-03T04:30.425Z",
+        "repeat_times":{"value": 5, "unit": "day"},
+        "task_length":{"value": 5, "unit": "day"},
+        "fixed":true,
+        "rigid":false
+
+    }
+    ,
+    {
+        "name":"project 1",
+        "sub_tasks": {"count": 6, "content": [] },
+        "start_time":"2022-04-03T04:30.425Z",
+        "repeat_times":{"value": 5, "unit": "day"},
+        "task_length":{"value": 5, "unit": "day"},
+        "fixed":true,
+        "rigid":false
+    }
+]
