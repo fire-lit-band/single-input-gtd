@@ -1,1 +1,1 @@
-import jsonimport pandas as pddef main():     with open("todo.json",'r') as file:         todo=json.load(file)         print(todo)if __name__=="__main__":    main()
+import jsonimport pandas as pddef read_todo():    todo=pd.read_csv("todo.csv")    return todoif __name__=="__main__":    print(read_todo())
