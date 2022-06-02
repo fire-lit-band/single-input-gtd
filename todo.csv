@@ -8,3 +8,4 @@ name,sub_tasks_count,sub_tasks_content,start_time_date,start_time_time,repetitio
 pandas,None,None,2022-05-31,04:39:42,1,d,30,m,30,True,False
 知能行,None,None,2022-05-31,04:39:42,1,d,30,m,30,True,False
 离散数学,None,None,2022-05-31,17:25:00,1,d,30,m,30,True,False
+numpy,None,None,2022-05-31,17:25:00,1,d,30,m,30,True,False
