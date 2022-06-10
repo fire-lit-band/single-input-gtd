@@ -1,1 +1,1 @@
-import jsonimport pandas as pddef read_todo():    todo=pd.read_csv("todo.csv")    return tododef display_todo():    todo = pd.read_csv("todo.csv")    return todo["name"]if __name__=="__main__":    print(display_todo())
+import jsonimport pandas as pddef read_todo():    todo=pd.read_csv("todo.csv")    return tododef today_todo():    todo = pd.read_csv("todo.csv")    return todo["name"]def display_all_task():    todo=pd.read_csv("todo.csv")    return todo["name"]if __name__=="__main__":    print(display_todo())
