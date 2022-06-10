@@ -3,11 +3,13 @@ import read_todo
 def main():
     result=True
     while result:
-        today_todo=read_todo.display_todo()
+        today_todo = read_todo.display_all_task()
         print(today_todo)
-        newinput=input("请输入内容")
-        result=yield module.main(newinput)
+        newinput = input("请输入内容")
+        result = module.main(newinput)
+
+    
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
