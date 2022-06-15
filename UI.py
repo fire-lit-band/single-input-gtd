@@ -8,6 +8,5 @@ def main():
         newinput = input("请输入内容")
         result = module.main(newinput)
 
-
 if __name__ == "__main__":
     main()

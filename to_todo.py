@@ -32,7 +32,6 @@ def add_record(Record):
         column_names = column_names.append(pd.Series(new_record), ignore_index=True)
         column_names.to_csv(file_name,index=False)
 
-def delete_record(name):
 
 
 
