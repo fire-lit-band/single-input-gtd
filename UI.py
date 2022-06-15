@@ -1,10 +1,13 @@
 import module
 import read_todo
 def main():
-    result=True
-    while result:
+    result="done"
+    while not result=="end":
         today_todo = read_todo.display_all_task()
-        print(today_todo)
+        if result=="done":
+            print(today_todo)
+        else:
+            print("开始计时！！")
         newinput = input("请输入内容")
         result = module.main(newinput)
 

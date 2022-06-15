@@ -73,7 +73,7 @@ def main(command):
     data=read_todo.today_todo()
     if len(data)==0:
         print("当前没有数据，请添加数据")
-        return False
+        return "end"
     if command.isdigit():
         if current_task.task_name!='':
             print("当前有任务")
@@ -82,23 +82,24 @@ def main(command):
             current_task=begin_task(current_task,data.loc[num])
         else:
             print("输入错误")
-        return True
+        return "doing"
     if command=='q':
         current_task=finished_task(current_task,command)
-        return False
+        return "end"
     elif command=='ok':
         current_task=finished_task(current_task,command)
+        return "done"
     elif command=='p':
         current_task=pause_task(current_task, command)
-        return True
+        return "done"
     elif command=="!":
         current_task=pause_task(current_task,command)
-        return True
+        return "done"
     elif command=='~':
         current_task=pause_task(current_task, command)
-        return True
+        return "done"
     elif command==' ':
-        return True
+        return "done"
     else:
         print("输入错误")
         return True
