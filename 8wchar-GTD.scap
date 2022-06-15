@@ -226,18 +226,8 @@
             <Border Weight="1">0.877745 0.828275 0.562127</Border>
          </Appearance>
          <String>暂停</String>
-         <ConnectedNoteIDs>74, 178-181</ConnectedNoteIDs>
-         <PointsToNoteIDs>74, 179-181</PointsToNoteIDs>
-      </Note>
-      <Note Width="66" FontSize="12" ID="73" Position="1060.0,753.6">
-         <Appearance>
-            <Alignment>Left</Alignment>
-            <Fill>0.975280 0.920302 0.624582</Fill>
-            <Border Weight="1">0.877745 0.828275 0.562127</Border>
-         </Appearance>
-         <String>切换任务</String>
-         <ConnectedNoteIDs>79, 181</ConnectedNoteIDs>
-         <PointsToNoteIDs>79</PointsToNoteIDs>
+         <ConnectedNoteIDs>74, 178-180</ConnectedNoteIDs>
+         <PointsToNoteIDs>74, 179-180</PointsToNoteIDs>
       </Note>
       <Note Width="93" FontSize="12" ID="74" Position="1345.0,690.6">
          <Appearance>
@@ -257,15 +247,6 @@
          <String>输入理由（可选）</String>
          <ConnectedNoteIDs>42, 54</ConnectedNoteIDs>
          <PointsToNoteIDs>54</PointsToNoteIDs>
-      </Note>
-      <Note Width="78" FontSize="12" ID="79" Position="1061.0,801.6">
-         <Appearance>
-            <Alignment>Left</Alignment>
-            <Fill>0.993942 0.786389 0.795438</Fill>
-            <Border Weight="1">0.894545 0.707759 0.715892</Border>
-         </Appearance>
-         <String>选择新任务</String>
-         <ConnectedNoteIDs>73</ConnectedNoteIDs>
       </Note>
       <Note Width="102" FontSize="12" ID="81" Position="1283.1,799.2">
          <Appearance>
@@ -529,14 +510,6 @@ reason:str</String>
          <ConnectedNoteIDs>14, 72</ConnectedNoteIDs>
          <PointsToNoteIDs>14</PointsToNoteIDs>
       </Note>
-      <Note Width="66" FontSize="12" ID="181" Position="1115.0,723.7">
-         <Appearance>
-            <Alignment>Left</Alignment>
-         </Appearance>
-         <String>to &lt;task></String>
-         <ConnectedNoteIDs>72-73</ConnectedNoteIDs>
-         <PointsToNoteIDs>73</PointsToNoteIDs>
-      </Note>
       <Note Width="200" FontSize="12" ID="182" Position="607.0,509.2">
          <Appearance>
             <Alignment>Left</Alignment>
@@ -660,7 +633,7 @@ estimatedTime:int/null
       </Style>
       <Style AffectFontStyle="Yes" AffectAlignment="Yes" Name="Dark Green" ID="80D4890F-C5A8-4DBB-83CF-9D6266D69870" AffectTextColor="Yes" AffectNoteBody="Yes" AffectSticky="Yes" AffectSize="No" AffectFade="No">
          <FillColor>0.401373 0.688762 0.216556</FillColor>
-         <Size>84.5,192.0</Size>
+         <Size>108.2,245.8</Size>
          <FontSize>12.0</FontSize>
       </Style>
    </NoteStyles>

@@ -11,8 +11,8 @@ import to_todo
 class Task:
     id:int
     task_name: str= ''
-    start_time: datetime=datetime.today()
-    end_time: datetime=datetime.today()
+    start_time: datetime=datetime.now()
+    end_time: datetime=datetime.now()
 
 @dataclass
 class Finished:
@@ -57,7 +57,7 @@ def finished_task(current_task,command):
 
 def begin_task(current_task,task_name):
     current_task.task_name=task_name
-    print(f"开始执行: {current_task.task_name[:-1]}")
+    print(f"开始执行: {current_task.task_name}")
     current_task.start_time = datetime.now()
     return current_task
 
@@ -77,15 +77,12 @@ def main(command):
     if command.isdigit():
         if current_task.task_name!='':
             print("当前有任务")
-            return True
         if 0<=int(command)<=len(data)-1:
             num=int(command)
             current_task=begin_task(current_task,data.loc[num])
-            return True
         else:
             print("输入错误")
-            return True
-        pass
+        return True
     if command=='q':
         current_task=finished_task(current_task,command)
         return False
