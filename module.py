@@ -84,9 +84,11 @@ def main(command):
             print("输入错误")
         return "doing"
     if command=='q':
+        to_todo.delete_todo(current_task.task_name)
         current_task=finished_task(current_task,command)
         return "end"
     elif command=='ok':
+        to_todo.delete_todo(current_task.task_name)
         current_task=finished_task(current_task,command)
         return "done"
     elif command=='p':

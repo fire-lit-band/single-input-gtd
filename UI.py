@@ -8,7 +8,7 @@ def main():
             print(today_todo)
         else:
             print("开始计时！！")
-        newinput = input("请输入内容")
+        newinput = input("请输入指令")
         result = module.main(newinput)
 
 if __name__ == "__main__":

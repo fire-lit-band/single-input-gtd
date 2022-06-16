@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="237e0c51-6664-4d36-a22e-7aee58ae905a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI.py" beforeDir="false" afterPath="$PROJECT_DIR$/UI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/module.py" beforeDir="false" afterPath="$PROJECT_DIR$/module.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/record_sample.csv" beforeDir="false" afterPath="$PROJECT_DIR$/record_sample.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/to_todo.py" beforeDir="false" afterPath="$PROJECT_DIR$/to_todo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo.csv" beforeDir="false" afterPath="$PROJECT_DIR$/todo.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,6 +18,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -80,7 +85,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="to_todo" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="to_todo" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="single-input-gtd" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -130,7 +135,9 @@
       <workItem from="1655217280574" duration="62000" />
       <workItem from="1655217355288" duration="809000" />
       <workItem from="1655273440726" duration="501000" />
-      <workItem from="1655274873768" duration="319000" />
+      <workItem from="1655274873768" duration="1370000" />
+      <workItem from="1655283835020" duration="646000" />
+      <workItem from="1655346827415" duration="7384000" />
     </task>
     <servers />
   </component>
@@ -138,9 +145,10 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/UI_py$UI.coverage" NAME="UI Coverage Results" MODIFIED="1655275172571" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/..//single-input-gtd" />
+    <SUITE FILE_PATH="coverage/UI_py$UI.coverage" NAME="UI Coverage Results" MODIFIED="1655373084799" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/..//single-input-gtd" />
     <SUITE FILE_PATH="coverage/module_py$UI.coverage" NAME="UI Coverage Results" MODIFIED="1654858321036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/single_input_gtd$read_todo.coverage" NAME="read_todo Coverage Results" MODIFIED="1653989403126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/..//single-input-gtd" />
+    <SUITE FILE_PATH="coverage/UI_py$to_todo.coverage" NAME="to_todo Coverage Results" MODIFIED="1655372885163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/..//single-input-gtd" />
     <SUITE FILE_PATH="coverage/single_input_gtd$to_todo.coverage" NAME="to_todo Coverage Results" MODIFIED="1653989396677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/..//single-input-gtd" />
     <SUITE FILE_PATH="coverage/read_todo_py$read_todo.coverage" NAME="read_todo Coverage Results" MODIFIED="1654157496193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/..//single-input-gtd" />
   </component>
