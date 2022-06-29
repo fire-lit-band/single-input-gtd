@@ -23,7 +23,7 @@ def add_todo(todo: pd.DataFrame):
 
 
 def add_record(Record: Finished):
-    file_name = Path("./time_record") / date.today().isoformat() / ".csv"
+    file_name = Path("./time_record") / (date.today().isoformat() + ".csv")
     if not file_name.exists():
         column_names = pd.read_csv("record_sample.csv")
     else:
@@ -31,7 +31,9 @@ def add_record(Record: Finished):
         record = list(Record.format())
         print(record)
         new_record = dict(zip(column_names, record))
-        column_names = column_names.append(pd.Series(new_record), ignore_index=True)
+        column_names = column_names.append(
+            pd.Series(new_record), ignore_index=True
+        )
 
     column_names.to_csv(file_name, index=False)
 
@@ -49,7 +51,9 @@ def delete_todo(content):
             remain_todo = exist_todo[~content_isin]  # 也就是直接删了
         else:  # 数量减少一次
             remain_todo = exist_todo
-            remain_todo.loc[remain_todo["name"] == content, ["sub_tasks_count"]] -= 1
+            remain_todo.loc[
+                remain_todo["name"] == content, ["sub_tasks_count"]
+            ] -= 1
         remain_todo.to_csv("todo.csv", index=False)
     else:
         print("wrong")
