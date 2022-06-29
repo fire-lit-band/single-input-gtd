@@ -23,7 +23,9 @@ def add_todo(todo: pd.DataFrame):
 
 
 def add_record(Record: Finished):
-    file_name = Path("./time_record") / (date.today().isoformat() + ".csv")
+    file_name = Path("./time_record", date.today().isoformat()).with_suffix(
+        "csv"
+    )
     if not file_name.exists():
         column_names = pd.read_csv("record_sample.csv")
     else:
@@ -34,8 +36,7 @@ def add_record(Record: Finished):
         column_names = column_names.append(
             pd.Series(new_record), ignore_index=True
         )
-
-    column_names.to_csv(file_name, index=False)
+        column_names.to_csv(file_name, index=False)
 
 
 def delete_todo(content):
