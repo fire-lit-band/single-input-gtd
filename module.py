@@ -27,7 +27,7 @@ class Finished:
     reason: str
 
     def format(self):
-        return tuple(vars(self).keys())
+        return tuple(vars(self).values())
 
 
 current_task: Task
