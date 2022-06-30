@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from module import Finished
+from Finished import Finished
 
 
 def to_todo(todo):
@@ -24,28 +24,31 @@ def add_todo(todo: pd.DataFrame):
 
 def add_record(Record: Finished):
     file_name = Path("./time_record", date.today().isoformat()).with_suffix(
-        "csv"
+        ".csv"
     )
     if not file_name.exists():
         column_names = pd.read_csv("record_sample.csv")
-    else:
-        column_names = pd.read_csv(file_name)
-        record = list(Record.format())
-        print(record)
-        new_record = dict(zip(column_names, record))
-        column_names = column_names.append(
-            pd.Series(new_record), ignore_index=True
-        )
-        column_names.to_csv(file_name, index=False)
+        column_names.to_csv(file_name)
+    column_names = pd.read_csv(file_name)
+    record = list(Record.format())
+    print(record)
+    new_record = dict(zip(column_names, record))
+    column_names = column_names.append(
+        pd.Series(new_record), ignore_index=True
+    )
+    column_names.to_csv(file_name, index=False)
 
 
 def delete_todo(content):
     # try:
     exist_todo = pd.read_csv("todo.csv")
+    df=exist_todo
     content_isin = exist_todo["name"].isin([content])  # 返回是否含有content的表
+    #print(content)
+
     if content_isin.any():  # 先判断一下有没有这一行，如果没有提早报错
-        row_with_column = exist_todo[content_isin]
-        num_of_sub = row_with_column.at[0, "sub_tasks_count"]
+        index_with_content=df[df.name==content].index.tolist()[0]
+        num_of_sub=exist_todo.sub_tasks_count.loc[index_with_content]
         if num_of_sub == 0:  # 0就是无穷次
             remain_todo = exist_todo
         elif num_of_sub == 1:
@@ -64,4 +67,4 @@ def delete_todo(content):
 
 
 if __name__ == "__main__":
-    delete_todo("数学分析")
+    delete_todo("统计")

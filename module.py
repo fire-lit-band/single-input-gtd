@@ -1,36 +1,14 @@
-from dataclasses import dataclass
-from datetime import datetime, time
 
+from datetime import datetime, time
+from Finished import Finished
+from Task import Task
 import pandas as pd
+
 
 import read_todo
 import to_todo
-import UI
 
 
-@dataclass
-class Task:
-    id: int
-    task_name: str = ""
-    start_time: datetime = datetime.now()
-    end_time: datetime = datetime.now()
-
-
-@dataclass
-class Finished:
-    name: str
-    subname: str
-    actuall_start_time: datetime
-    actuall_end_time: datetime
-    actlength: int
-    actshift: int
-    reason: str
-
-    def format(self):
-        return tuple(vars(self).values())
-
-
-current_task: Task
 
 
 def pause_task(current_task: Task, command: str):
@@ -85,8 +63,8 @@ def end_task(current_tasks: Task, reason: str):
     return current_tasks
 
 
-def main(command: str):
-    global current_task
+def main(command: str,current_task:Task):
+
     data = read_todo.today_todo()
     if len(data) == 0:
         print("当前没有数据，请添加数据")
