@@ -1,3 +1,4 @@
+import datetime
 import os
 from datetime import date
 from pathlib import Path
@@ -7,7 +8,7 @@ import pandas as pd
 
 from Finished import Finished
 import read_todo
-
+from datetime import date,datetime
 
 
 
@@ -91,6 +92,7 @@ def inbox():
     output_csv(df)
 
 
+
 def output_csv(df,file="todo.csv"):
     df.to_csv(file,index=False)
 
@@ -103,9 +105,50 @@ def find(column_name,content):
     return index_with_content
 
 
+def set_deadline(index):
+    year=input("请输入年份")
+    if year=='':
+        year=date.today().year
+    else:
+        year=int(year)
+    month=input("请输入月份")
+    if month=='':
+        month=date.today().month
+    else:
+        month=int(month)
+    day=input("请输入日期")
+    if day=='':
+        day=date.today().day
+    else:
+        day=int(day)
+    hour=input("请输入小时")
+    if hour=='':
+        hour=23
+        minute=59
+        second=59
+    else:
+        hour=int(hour)
+        minute=input("请输入分钟")
+        if minute=='':
+            minute=0
+            second=0
+        else:
+            minute=int(minute)
+            second=0
+    ddl=datetime(year,month, day, hour, minute, second).timestamp()
+    df=read_todo.read_all_content()
+    df.at[index,'start_time']=ddl
+    df.to_csv("todo.csv")
+
+
+
+def use_set_index():
+    print(read_todo.today_inbox_todo())
+    index=int(input("请输入内容"))
+    set_deadline(index)
 
 
 
 if __name__ == "__main__":
 
-    inbox()
+    use_set_index()
