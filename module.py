@@ -65,32 +65,32 @@ def end_task(current_tasks: Task, reason: str):
 
 def main(command: str,current_task:Task):
 
-    data = read_todo.today_todo()
+    data = read_todo.today_inbox_todo()
     if len(data) == 0:
         print("当前没有数据，请添加数据")
-        return "end"
+        return "end",current_task
     if command.isdigit():
         if current_task.task_name != "":
             print("当前有任务")
-        if 0 <= int(command) <= len(data) - 1:
+        elif 0 <= int(command) <= len(data) - 1:
             num = int(command)
             current_task = begin_task(current_task, data.loc[num])
         else:
             print("输入错误")
-        return "doing"
-    if command == " ":
-        return "done"
+        return "doing",current_task
+    if command ==" ": # 这个是用来刷新内容的
+        return "done",current_task
     elif command == "ok":
         to_todo.delete_todo(current_task.task_name)
         current_task = finished_task(current_task, command)
-        return "done"
+        return "done",current_task
     elif command in {"p", "!", "~"}:
         current_task = pause_task(current_task, command)
-        return "done"
+        return "done",current_task
     elif command == "q":
         to_todo.delete_todo(current_task.task_name)
         current_task = finished_task(current_task, command)
-        return "end"
+        return "end",current_task
     else:
         print("输入错误")
-        return True
+        return True,current_task

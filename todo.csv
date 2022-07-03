@@ -1,11 +1,4 @@
-name,sub_tasks_count,start_time_date,start_time_time,repetition_gap,repetition_gap_unit,task_expect_length,task_value,fixed,rigid
-数学分析,0,2022-05-31,04:30:42,1,d,30,10,True,False
-线性代数,0,2022-05-31,04:39:42,1,d,30,30,True,False
-机器学习,0,2022-05-31,04:39:42,1,d,30,30,True,False
-统计,-5,2022-05-31,04:39:42,1,d,30,30,True,False
-随机过程,0,2022-05-31,04:39:42,1,d,30,30,True,False
-算法,0,2022-05-31,04:39:42,1,d,30,30,True,False
-pandas,0,2022-05-31,04:39:42,1,d,30,30,True,False
-知能行,0,2022-05-31,04:39:42,1,d,30,30,True,False
-离散数学,0,2022-05-31,17:25:00,1,d,30,30,True,False
-numpy,0,2022-05-31,17:25:00,1,d,30,30,True,False
+name,id,father,num,start_time,repetition_gap,task_expect_length,task_value,fixed,rigid,leaf
+数学分析,1656833677.8194325,,0,,,,,,,[1656835887.1797037]
+线性代数,1656834868.0923867,,0,,,,,,,[]
+度量空间,1656835887.1797037,1656833677.8194325,0,,,,,,,[]

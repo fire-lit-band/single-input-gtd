@@ -1,15 +1,14 @@
 import os
 from datetime import date
 from pathlib import Path
+import time
 
 import pandas as pd
 
 from Finished import Finished
+import read_todo
 
 
-def to_todo(todo):
-    data = pd.DataFrame(todo)
-    data.to_csv("todo.csv")
 
 
 def add_todo(todo: pd.DataFrame):
@@ -65,6 +64,48 @@ def delete_todo(content):
     # except:
     # print("wrong")
 
+def inbox():
+    df=read_todo.read_all_content()
+    print(read_todo.today_inbox_todo())
+    fatherpoint=''
+    while command:=input("command"):
+        if command=='add':
+            content = input("你要加入什么内容")
+            timestamp=time.time()
+            new_task = {'name': content, 'id': timestamp, 'father':fatherpoint,'leaf': [],'num':0}
+            df = df.append(pd.Series(new_task), ignore_index=True)
+            df.to_csv("todo.csv", index=False)
+            if not fatherpoint=='':
+                index=find('id',fatherpoint)[0]
+                df.at[index, 'leaf'] = eval(df.at[index, 'leaf']) + [timestamp]
+
+            break
+        else:
+            if command.isdigit():
+                # try:
+                command_num=int(command)
+                print(df.iloc[find('id',fatherpoint)].name)
+                fatherpoint = df.at[command_num, 'id']
+                # except:
+                #     print("wrong")
+    output_csv(df)
+
+
+def output_csv(df,file="todo.csv"):
+    df.to_csv(file,index=False)
+
+
+
+def find(column_name,content):
+    exist_todo = read_todo.read_all_content()
+    df = exist_todo
+    index_with_content = df[df[column_name] == content].index.tolist()
+    return index_with_content
+
+
+
+
 
 if __name__ == "__main__":
-    delete_todo("统计")
+
+    inbox()

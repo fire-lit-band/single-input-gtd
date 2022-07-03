@@ -13,7 +13,7 @@ def main():
         else:
             print("开始计时！！")
         newinput = input("请输入指令")
-        result = module.main(newinput,current_task)
+        result,current_task = module.main(newinput,current_task)
 
 
 if __name__ == "__main__":
