@@ -67,7 +67,7 @@ def delete_todo(content):
 
 def inbox():
     df=read_todo.read_all_content()
-    print(read_todo.today_inbox_todo())
+    print(read_todo.display_all_task())
     fatherpoint=''
     while command:=input("command"):
         if command=='add':
@@ -138,14 +138,11 @@ def set_deadline(index):
     ddl=datetime(year,month, day, hour, minute, second).timestamp()
     df=read_todo.read_all_content()
     df.at[index,'start_time']=ddl
-    df.to_csv("todo.csv")
+    output_csv()
 
 
 
-def use_set_index():
-    print(read_todo.today_inbox_todo())
-    index=int(input("请输入内容"))
-    set_deadline(index)
+
 
 
 

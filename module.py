@@ -65,7 +65,7 @@ def end_task(current_tasks: Task, reason: str):
 
 def main(command: str,current_task:Task):
 
-    data = read_todo.today_inbox_todo()
+    data=pd.read_csv("todo.csv")
     if len(data) == 0:
         print("当前没有数据，请添加数据")
         return "end",current_task

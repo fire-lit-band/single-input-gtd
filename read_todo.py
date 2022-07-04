@@ -36,7 +36,9 @@ def remain_time(ddl):
         else:
             return "还剩下"+str(remain_tuple[3])+"小时,"+str(remain_tuple[4])+"分钟"
 
-
+def display_todo():
+    print(today_inbox_todo())
+    today_ddl()
 
 if __name__ == "__main__":
     today_ddl()
