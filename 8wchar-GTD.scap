@@ -1,0 +1,646 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<ScappleDocument ID="F4F64DFE-A3CC-488E-B64F-DC4283059C9E" Version="1.1">
+   <Notes>
+      <Note Width="66" FontSize="12" ID="2" Position="1059.0,515.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.993942 0.786389 0.795438</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>选择任务</String>
+         <ConnectedNoteIDs>4, 26, 90</ConnectedNoteIDs>
+         <PointsToNoteIDs>4, 90</PointsToNoteIDs>
+      </Note>
+      <Note Width="66" FontSize="12" ID="4" Position="1063.0,605.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.989120 0.814084 1.0</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>执行任务</String>
+         <ConnectedNoteIDs>2, 52, 89, 176-178</ConnectedNoteIDs>
+         <PointsToNoteIDs>52, 176-178</PointsToNoteIDs>
+      </Note>
+      <Note Width="48" FontSize="12" ID="7" Position="952.0,687.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>完成</String>
+         <ConnectedNoteIDs>22, 176</ConnectedNoteIDs>
+         <PointsToNoteIDs>22</PointsToNoteIDs>
+      </Note>
+      <Note Width="66" FontSize="12" ID="14" Position="1405.0,748.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>突发事项</String>
+         <ConnectedNoteIDs>48, 180</ConnectedNoteIDs>
+         <PointsToNoteIDs>48</PointsToNoteIDs>
+      </Note>
+      <Note Width="69.9219" FontSize="12" ID="22" Position="932.0,756.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Border Weight="0" Style="Rounded"/>
+         </Appearance>
+         <String>删除旧任务</String>
+         <ConnectedNoteIDs>5, 7</ConnectedNoteIDs>
+         <PointsToNoteIDs>5</PointsToNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="23" Position="1217.1,780.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>休息</String>
+         <ConnectedNoteIDs>42, 81, 179</ConnectedNoteIDs>
+         <PointsToNoteIDs>42</PointsToNoteIDs>
+      </Note>
+      <Note Width="66" FontSize="12" ID="26" Position="1149.0,514.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>输入参数</String>
+         <ConnectedNoteIDs>2, 27-28</ConnectedNoteIDs>
+         <PointsToNoteIDs>27-28</PointsToNoteIDs>
+      </Note>
+      <Note Width="93" FontSize="12" ID="27" Position="1257.0,502.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>任务序号/名称</String>
+         <ConnectedNoteIDs>26</ConnectedNoteIDs>
+      </Note>
+      <Note Width="114" FontSize="12" ID="28" Position="1257.0,533.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>预估时间(可选)</String>
+         <ConnectedNoteIDs>26</ConnectedNoteIDs>
+      </Note>
+      <Note Width="73" FontSize="12" ID="32" Position="1541.0,756.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <String>eg</String>
+      </Note>
+      <Note Width="131" FontSize="12" ID="33" Position="1568.0,789.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <String>学校要求填写文件</String>
+      </Note>
+      <Note Width="121" FontSize="12" ID="34" Position="1573.0,818.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <String>或者是小组讨论成员正好在线（因为都是线上的，他们经常不回复）</String>
+      </Note>
+      <Note Width="66" FontSize="12" ID="42" Position="1213.1,844.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>停止休息</String>
+         <ConnectedNoteIDs>23, 76</ConnectedNoteIDs>
+         <PointsToNoteIDs>76</PointsToNoteIDs>
+      </Note>
+      <Note Width="73" FontSize="12" ID="48" Position="1405.3,806.5">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>录入任务</String>
+         <ConnectedNoteIDs>14, 49</ConnectedNoteIDs>
+         <PointsToNoteIDs>49</PointsToNoteIDs>
+      </Note>
+      <Note Width="69.9219" FontSize="12" ID="49" Position="1404.8,868.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.993942 0.786389 0.795438</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>执行新任务</String>
+         <ConnectedNoteIDs>48</ConnectedNoteIDs>
+      </Note>
+      <Note Width="78" FontSize="12" ID="52" Position="897.0,605.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>修改任务名</String>
+         <ConnectedNoteIDs>4</ConnectedNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="54" Position="1228.1,956.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>选择</String>
+         <ConnectedNoteIDs>55-56, 76</ConnectedNoteIDs>
+         <PointsToNoteIDs>55-56</PointsToNoteIDs>
+      </Note>
+      <Note Width="139" FontSize="12" ID="55" Position="1250.1,1033.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.989120 0.814084 1.0</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>执行休息前搁置的任务</String>
+         <ConnectedNoteIDs>54</ConnectedNoteIDs>
+      </Note>
+      <Note Width="78" FontSize="12" ID="56" Position="1137.1,1035.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.993942 0.786389 0.795438</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>选择新任务</String>
+         <ConnectedNoteIDs>54</ConnectedNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="59" Position="843.0,687.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>退出</String>
+         <ConnectedNoteIDs>71, 177</ConnectedNoteIDs>
+         <PointsToNoteIDs>71</PointsToNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="63" Position="126.7,1198.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>完成</String>
+         <ConnectedNoteIDs>67</ConnectedNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="66" Position="123.7,1338.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>搁置</String>
+         <ConnectedNoteIDs>67</ConnectedNoteIDs>
+      </Note>
+      <Note Width="53" FontSize="12" ID="67" Position="25.7,1259.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>未执行</String>
+         <ConnectedNoteIDs>63, 66</ConnectedNoteIDs>
+         <PointsToNoteIDs>63, 66</PointsToNoteIDs>
+      </Note>
+      <Note Width="90" FontSize="12" ID="71" Position="814.0,747.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743786 0.983612 0.629999</Fill>
+            <Border Weight="1">0.669413 0.885237 0.567010</Border>
+         </Appearance>
+         <String>搁置当前任务</String>
+         <ConnectedNoteIDs>59</ConnectedNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="72" Position="1180.0,688.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>暂停</String>
+         <ConnectedNoteIDs>74, 178-180</ConnectedNoteIDs>
+         <PointsToNoteIDs>74, 179-180</PointsToNoteIDs>
+      </Note>
+      <Note Width="93" FontSize="12" ID="74" Position="1345.0,690.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743786 0.983612 0.629999</Fill>
+            <Border Weight="1">0.669413 0.885237 0.567010</Border>
+         </Appearance>
+         <String>搁置当前任务</String>
+         <ConnectedNoteIDs>72</ConnectedNoteIDs>
+      </Note>
+      <Note Width="115" FontSize="12" ID="76" Position="1194.1,900.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>输入理由（可选）</String>
+         <ConnectedNoteIDs>42, 54</ConnectedNoteIDs>
+         <PointsToNoteIDs>54</PointsToNoteIDs>
+      </Note>
+      <Note Width="102" FontSize="12" ID="81" Position="1283.1,799.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743786 0.983612 0.629999</Fill>
+            <Border Weight="1">0.669413 0.885237 0.567010</Border>
+         </Appearance>
+         <String>休息到一定时间
+弹出提醒</String>
+         <ConnectedNoteIDs>23</ConnectedNoteIDs>
+      </Note>
+      <Note Width="134" FontSize="23.2008" ID="83" Position="1109.0,420.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>用户行为图</String>
+      </Note>
+      <Note Width="66" FontSize="12" ID="89" Position="1201.0,612.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.989120 0.814084 1.0</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>创建任务</String>
+         <ConnectedNoteIDs>4, 90</ConnectedNoteIDs>
+         <PointsToNoteIDs>4</PointsToNoteIDs>
+      </Note>
+      <Note Width="102" FontSize="12" ID="90" Position="1128.0,568.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>没有记录的任务</String>
+         <ConnectedNoteIDs>2, 89</ConnectedNoteIDs>
+         <PointsToNoteIDs>89</PointsToNoteIDs>
+      </Note>
+      <Note Width="261" FontSize="12" ID="99" Position="146.3,821.0">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743786 0.983612 0.629999</Fill>
+            <Border Weight="1">0.669413 0.885237 0.567010</Border>
+         </Appearance>
+         <String>renameCurrentTask()
+setCurrentTask()
+setCurrentTaskStatus(status)
+suspendCurrentTask()
+// setCurrentTaskStatus
+
+addTask(name, estimatedTime?, due?, type=)
+
+loadTaskQueue()</String>
+         <ConnectedNoteIDs>102</ConnectedNoteIDs>
+      </Note>
+      <Note Width="76" FontSize="12" ID="100" Position="637.7,54.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,10</FormatRange>
+         </Formatting>
+         <String>EventType
+Rest
+Task
+Execution</String>
+         <ConnectedNoteIDs>0</ConnectedNoteIDs>
+      </Note>
+      <Note Width="163" FontSize="12" ID="101" Position="485.6,719.4">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,13</FormatRange>
+         </Formatting>
+         <String>TerminalView
+messages: Record&lt;str, str>
+model: Model</String>
+         <ConnectedNoteIDs>102, 106</ConnectedNoteIDs>
+      </Note>
+      <Note Width="140" FontSize="12" ID="102" Position="207.0,697.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,5</FormatRange>
+         </Formatting>
+         <String>Model
+tasks: Task[]
+currentTask: Task
+executions: Execution[]
+onRest: boolean
+_timer: Timer</String>
+         <ConnectedNoteIDs>99, 101</ConnectedNoteIDs>
+      </Note>
+      <Note Width="175" FontSize="12" ID="104" Position="68.0,474.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,17</FormatRange>
+         </Formatting>
+         <String>interface Storage
+load(): TaskQueue
+save(taskQueue: TaskQueue)</String>
+         <ConnectedNoteIDs>105</ConnectedNoteIDs>
+         <PointsToNoteIDs>105</PointsToNoteIDs>
+      </Note>
+      <Note Width="284" FontSize="12" ID="105" Position="302.0,498.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <String>class KanbanFileStorage extends Storage</String>
+         <ConnectedNoteIDs>104</ConnectedNoteIDs>
+      </Note>
+      <Note Width="197" FontSize="12" ID="106" Position="470.8,817.0">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743786 0.983612 0.629999</Fill>
+            <Border Weight="1">0.669413 0.885237 0.567010</Border>
+         </Appearance>
+         <String>dispatchCommand(command: str)
+// 根据输入指令执行 Model 方法
+
+chooseTask()
+
+inputTask()
+
+handleInput()
+
+quit()
+  model.suspendTask()
+
+complete()
+
+pause()
+
+rest()
+
+taskPopsUp()
+
+showTodos()</String>
+         <ConnectedNoteIDs>101</ConnectedNoteIDs>
+      </Note>
+      <Note Width="247.375" FontSize="12" ID="107" Position="169.8,160.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,4</FormatRange>
+         </Formatting>
+         <String>Task
+name: str
+id: int
+type: EventType
+estimatedTime: int (milliseconds) | null
+due: datetime | null
+subtasks_count: int/null
+subtasks_gap:int/null
+value: </String>
+         <ConnectedNoteIDs>0</ConnectedNoteIDs>
+         <PointsToNoteIDs>0</PointsToNoteIDs>
+      </Note>
+      <Note Width="112" FontSize="12" ID="109" Position="71.0,538.6">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <String>interface Timer
+start()
+getTime(): int
+end(): int
+// 结束并返回时间</String>
+      </Note>
+      <Note Width="184.375" FontSize="12" ID="110" Position="886.7,170.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,11</FormatRange>
+         </Formatting>
+         <String>IExecution 
+id: int
+subname:
+due:Daatetime/null
+estimatedTime:Datetime/null
+start: Datetime
+end: Datetime
+length: Datetime
+reason:str</String>
+         <ConnectedNoteIDs>0, 112</ConnectedNoteIDs>
+         <PointsToNoteIDs>112</PointsToNoteIDs>
+      </Note>
+      <Note Width="57.7515" FontSize="12" ID="112" Position="937.0,375.1">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,7</FormatRange>
+         </Formatting>
+         <String>reason:
+1.”rest”
+2.”game”
+3.”sleep”
+4…..</String>
+         <ConnectedNoteIDs>110</ConnectedNoteIDs>
+      </Note>
+      <Note Width="29" FontSize="12" ID="176" Position="1025.8,648.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>ok</String>
+         <ConnectedNoteIDs>4, 7</ConnectedNoteIDs>
+         <PointsToNoteIDs>7</PointsToNoteIDs>
+      </Note>
+      <Note Width="23" FontSize="12" ID="177" Position="969.0,651.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>q</String>
+         <ConnectedNoteIDs>4, 59</ConnectedNoteIDs>
+         <PointsToNoteIDs>59</PointsToNoteIDs>
+      </Note>
+      <Note Width="23" FontSize="12" ID="178" Position="1140.0,652.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>p</String>
+         <ConnectedNoteIDs>4, 72</ConnectedNoteIDs>
+         <PointsToNoteIDs>72</PointsToNoteIDs>
+      </Note>
+      <Note Width="54" FontSize="12" ID="179" Position="1203.0,733.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>~ / rest</String>
+         <ConnectedNoteIDs>23, 72</ConnectedNoteIDs>
+         <PointsToNoteIDs>23</PointsToNoteIDs>
+      </Note>
+      <Note Width="59" FontSize="12" ID="180" Position="1313.0,723.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>! &lt;task></String>
+         <ConnectedNoteIDs>14, 72</ConnectedNoteIDs>
+         <PointsToNoteIDs>14</PointsToNoteIDs>
+      </Note>
+      <Note Width="200" FontSize="12" ID="182" Position="607.0,509.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+         </Appearance>
+         <String>完成的渲染为 [√] 事件，未完成和搁置的渲染为 []</String>
+      </Note>
+      <Note Width="129.749" FontSize="12" ID="0" Position="561.7,170.3">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743297 0.900298 0.994537</Fill>
+            <Border Weight="1">0.668971 0.810269 0.895079</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,9</FormatRange>
+         </Formatting>
+         <String>Executing
+id:int
+sub_name:
+type:EventType
+start:Datetime
+due:Datetime/null
+estimatedTime:int/null
+</String>
+         <ConnectedNoteIDs>100, 107, 110</ConnectedNoteIDs>
+         <PointsToNoteIDs>100, 110</PointsToNoteIDs>
+      </Note>
+      <Note Width="134.644" FontSize="20" ID="1" Position="145.3,35.2">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <Formatting>
+            <FormatRange Bold="Yes">0,6</FormatRange>
+         </Formatting>
+         <String>存储数据结构</String>
+      </Note>
+      <Note Width="66" FontSize="12" ID="3" Position="929.2,904.8">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>停止休息</String>
+         <ConnectedNoteIDs>5-6</ConnectedNoteIDs>
+         <PointsToNoteIDs>6</PointsToNoteIDs>
+      </Note>
+      <Note Width="41" FontSize="12" ID="5" Position="930.1,844.7">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>休息</String>
+         <ConnectedNoteIDs>3, 8, 22</ConnectedNoteIDs>
+         <PointsToNoteIDs>3</PointsToNoteIDs>
+      </Note>
+      <Note Width="115" FontSize="12" ID="6" Position="910.2,960.8">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.975280 0.920302 0.624582</Fill>
+            <Border Weight="1">0.877745 0.828275 0.562127</Border>
+         </Appearance>
+         <String>输入理由（可选）</String>
+         <ConnectedNoteIDs>3, 11</ConnectedNoteIDs>
+         <PointsToNoteIDs>11</PointsToNoteIDs>
+      </Note>
+      <Note Width="102" FontSize="12" ID="8" Position="999.2,859.8">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.743786 0.983612 0.629999</Fill>
+            <Border Weight="1">0.669413 0.885237 0.567010</Border>
+         </Appearance>
+         <String>休息到一定时间
+弹出提醒</String>
+         <ConnectedNoteIDs>5</ConnectedNoteIDs>
+      </Note>
+      <Note Width="78" FontSize="12" ID="11" Position="924.3,1043.5">
+         <Appearance>
+            <Alignment>Left</Alignment>
+            <Fill>0.993942 0.786389 0.795438</Fill>
+            <Border Weight="1">0.894545 0.707759 0.715892</Border>
+         </Appearance>
+         <String>选择新任务</String>
+         <ConnectedNoteIDs>6</ConnectedNoteIDs>
+      </Note>
+   </Notes>
+   <BackgroundShapes/>
+   <NoteStyles>
+      <Style AffectFontStyle="No" AffectAlignment="No" Name="Bubble (Yellow)" ID="6CBA922E-D7C6-4A44-9B95-075923571BBD" AffectTextColor="No" AffectNoteBody="Yes" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <BorderThickness>1</BorderThickness>
+         <BorderColor>0.877745 0.828275 0.562127</BorderColor>
+         <FillColor>0.975280 0.920302 0.624582</FillColor>
+      </Style>
+      <Style AffectFontStyle="No" AffectAlignment="No" Name="Bubble (Blue)" ID="AC14992F-2EC6-407C-9612-5897AFEB54EE" AffectTextColor="No" AffectNoteBody="Yes" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <BorderThickness>1</BorderThickness>
+         <BorderColor>0.668971 0.810269 0.895079</BorderColor>
+         <FillColor>0.743297 0.900298 0.994537</FillColor>
+      </Style>
+      <Style AffectFontStyle="No" AffectAlignment="No" Name="Red Text" ID="527A7CC6-6D8B-4E5D-B350-978A34D5AEE5" AffectTextColor="Yes" AffectNoteBody="No" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <TextColor>0.985946 0.0 0.026947</TextColor>
+      </Style>
+      <Style AffectFontStyle="No" AffectAlignment="No" Name="Bubble (Green)" ID="E23345D7-303A-4285-829D-1298433111C8" AffectTextColor="No" AffectNoteBody="Yes" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <BorderThickness>1</BorderThickness>
+         <BorderColor>0.669413 0.885237 0.567010</BorderColor>
+         <FillColor>0.743786 0.983612 0.629999</FillColor>
+      </Style>
+      <Style AffectFontStyle="No" AffectAlignment="No" Name="Bubble (Pink)" ID="0D6B948B-012F-4644-8446-43566DDF1418" AffectTextColor="No" AffectNoteBody="Yes" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <BorderThickness>1</BorderThickness>
+         <BorderColor>0.894545 0.707759 0.715892</BorderColor>
+         <FillColor>0.989120 0.814084 1.0</FillColor>
+      </Style>
+      <Style AffectFontStyle="No" AffectAlignment="No" Name="Bubble (Red)" ID="65205DA5-3380-496D-A589-7D368880CC8C" AffectTextColor="No" AffectNoteBody="Yes" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <BorderThickness>1</BorderThickness>
+         <BorderColor>0.894545 0.707759 0.715892</BorderColor>
+         <FillColor>0.993942 0.786389 0.795438</FillColor>
+      </Style>
+      <Style AffectFontStyle="Yes" AffectAlignment="Yes" Name="Title Text" ID="79DF3C3E-6F43-4133-901A-4A45D58534BE" AffectTextColor="No" AffectNoteBody="No" AffectSticky="No" AffectSize="No" AffectFade="No">
+         <IsBold>Yes</IsBold>
+         <FontSize>28.0</FontSize>
+      </Style>
+      <Style AffectFontStyle="Yes" AffectAlignment="Yes" Name="Dark Green" ID="80D4890F-C5A8-4DBB-83CF-9D6266D69870" AffectTextColor="Yes" AffectNoteBody="Yes" AffectSticky="Yes" AffectSize="No" AffectFade="No">
+         <FillColor>0.401373 0.688762 0.216556</FillColor>
+         <Size>108.2,245.8</Size>
+         <FontSize>12.0</FontSize>
+      </Style>
+   </NoteStyles>
+   <UISettings>
+      <BackgroundColor>1.0 0.988373 0.949905</BackgroundColor>
+      <DefaultFont>Helvetica</DefaultFont>
+      <DefaultTextColor>0.0 0.0 0.0</DefaultTextColor>
+   </UISettings>
+   <PrintSettings VerticalPagination="Auto" HorizontalPagination="Clip" Orientation="Portrait" RightMargin="72.000000" BottomMargin="90.000000" HorizontallyCentered="Yes" ScaleFactor="1.000000" PagesAcross="1" PaperType="iso-a4" PagesDown="1" TopMargin="90.000000" Collates="Yes" PaperSize="595.000000,842.000000" LeftMargin="72.000000" VerticallyCentered="Yes"/>
+</ScappleDocument>

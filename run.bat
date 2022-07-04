@@ -1,3 +1,3 @@
-cd "D:\OneDrive - City University of Hong Kong - Student\cityu\plan"
+cd "E:\single-input-gtd"
 CALL conda activate test
-python main.py
+python UI.py
