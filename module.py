@@ -74,7 +74,7 @@ def main(command: str,current_task:Task):
             print("当前有任务")
         elif 0 <= int(command) <= len(data) - 1:
             num = int(command)
-            current_task = begin_task(current_task, data.loc[num])
+            current_task = begin_task(current_task, data.at[num,'name'])
         else:
             print("输入错误")
         return "doing",current_task
