@@ -48,7 +48,7 @@ def delete_todo(content):
 
     if content_isin.any():  # 先判断一下有没有这一行，如果没有提早报错
         index_with_content=df[df.name==content].index.tolist()[0]
-        num_of_sub=exist_todo.sub_tasks_count.loc[index_with_content]
+        num_of_sub=exist_todo.num.loc[index_with_content]
         if num_of_sub == 0:  # 0就是无穷次
             remain_todo = exist_todo
         elif num_of_sub == 1:
@@ -56,7 +56,7 @@ def delete_todo(content):
         else:  # 数量减少一次
             remain_todo = exist_todo
             remain_todo.loc[
-                remain_todo["name"] == content, ["sub_tasks_count"]
+                remain_todo["name"] == content, ["num"]
             ] -= 1
         remain_todo.to_csv("todo.csv", index=False)
     else:
