@@ -1,0 +1,28 @@
+import PySimpleGUI as sg
+
+    # while command := input("请输入指令\n"):
+    #     command = int(command)
+    #     if command == 1:
+    #         print(read_todo.today_inbox_todo())
+    #         index = int(input("请输入内容\n"))
+    #         to_todo.set_deadline(index)
+    #     else:
+    #         to_todo.inbox()
+    #     print("1、加入ddl")
+    #     print("2、加入新项目")
+  # 设置当前主题
+# 界面布局，将会按照列表顺序从上往下依次排列，二级列表中，从左往右依此排列
+layout = [
+            [sg.Button('1、加入ddl')],
+            [sg.Button('2、加入新项目')],
+            [sg.Button('cancel')]
+          ]
+# 创造窗口
+window = sg.Window('用户输入部分', layout)
+# 事件循环并获取输入值
+while True:
+    event,values= window.read()
+    if event == 'cancel' or event==sg.WIN_CLOSED:   # 如果用户关闭窗口或点击`Cancel`
+        break
+
+window.close()
