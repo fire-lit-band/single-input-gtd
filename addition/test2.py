@@ -74,15 +74,23 @@ def set_default(key,values,datetuple,content,havecontent):
 
 def todo_content(key,todoTree,df,file,content=None):
     if content==None:
-        content={'name':'','num':'','date_tuple':'','hour':'','minute':'','repetition_gap':'','task_value':''}
+        content={'name':'','num':'','hour':'','minute':'','repetition_gap':'','task_value':''}
+        datetuple = None
         havecontent=False
     else:
         havecontent=True
+        if not np.isnan(content['start_time']):
+            struct_times=time.localtime(content['start_time'])
+            datetuple=[struct_times.year,struct_times.month,struct_times.day]
+            content['hour']=struct_times.hour
+            content['minute'] = struct_times.minute
+        else:
+            datetuple=None
     layout = [[sg.Text('名字')], [sg.Input(content['name'],key='name')],
               [sg.Text('重复次数')], [sg.Input(content['num'],key='num')],
               [sg.Text('截止时间')],
               [sg.Button('年月日', key='date')],
-              [sg.Text(content['date_tuple'], key='date_tuple')],
+              [sg.Text(datetuple, key='date_tuple')],
               [sg.Text('时')], [sg.Input(content['hour'],key='hour')],
               [sg.Text('分')], [sg.Input(content['minute'],key='minute')],
               [sg.Text('间隔天数')], [sg.Input(content['repetition_gap'],key='repetition_gap')],
@@ -90,7 +98,7 @@ def todo_content(key,todoTree,df,file,content=None):
 
               [sg.Button('cancel'), sg.Button('ok')]]
     windowadd = sg.Window('add', layout)
-    datetuple = None
+
     while True:  # Event Loop
         event, values = windowadd.read()
         if event in (sg.WIN_CLOSED, 'cancel'):
@@ -104,10 +112,10 @@ def todo_content(key,todoTree,df,file,content=None):
     windowadd.close()
     try:
         values = set_default(key, values, datetuple,content,havecontent)
-    except:
+    except TypeError:
         return todoTree
     if havecontent:
-        tododelete(df, file, [values['id']], df)
+        df=tododelete(df, file, [values['id']], df)
 
     df = pd.concat([df, pd.Series(values).to_frame().T], ignore_index=True)
     df.to_csv(file, index=False)
@@ -145,8 +153,9 @@ def readcsv(file):
 
 
 def tododelete(df,file,key,todo):
-    df=df.drop(to_todo.find('id',key[0],todo)[0])
-    df.to_csv(file,index=False)
+    print(to_todo.find('id',key[0],todo)[0])
+    df=df.drop([to_todo.find('id',key[0],todo)[0]])
+    return df
 
 def main():
     file='../todo.csv'
@@ -170,12 +179,12 @@ def main():
         if event=='clear':
             window['TREE'].update(todoTree)
         if event=='delete':
-            tododelete(df,file,values['TREE'],df)
+            df=tododelete(df,file,values['TREE'],df)
+            df.to_csv(file,index=False)
             df, todoTree, layout = readcsv(file)
             window['TREE'].update(todoTree)
         if event=='revise':
             content=dict(df.loc[to_todo.find('id',values['TREE'][0],df)[0]])
-            content['date_tuple']=''
             content['hour']=''
             content['minute']=''
             todo_content(values['TREE'], todoTree, df, file,content)
