@@ -4,6 +4,8 @@ import pandas as pd
 import time
 from datetime import datetime
 import to_todo
+from treelib import Tree
+from math import isnan
 
 
 def read_all_content(file="todo.csv"):
@@ -11,9 +13,10 @@ def read_all_content(file="todo.csv"):
 
 
 def today_inbox_todo(todo):
-    todo=todo[todo.father.isnull() & todo.start_time.isnull()]
+    tree=Tree()
     for i in todo.index:
-        print_child(i,0,todo)
+        tree.create_node(todo.at[i,'name'],todo.at[i,'id'],parent=todo.at[i,'father'])
+    tree.show()
 
 
 def display_all_task(todo):
@@ -37,20 +40,18 @@ def remain_time(ddl):
             return "还剩下"+str(remain_tuple[3])+"小时,"+str(remain_tuple[4])+"分钟"
 
 def display_todo(todo):
-    today_inbox_todo(todo)
-    today_ddl(todo)
+    print_child(todo)
 
 
-def print_child(i,incident,todo):
-    leaf=eval(todo.at[i,'leaf'])
-    if not np.isnan(todo.loc[i].start_time):
-        print(" " * incident + str(i) + " " + todo.at[i, 'name']+" "+remain_time(todo.at[i,'start_time']))
-    else:
-        print(" " * incident + str(i) + " " + todo.at[i, 'name'] )
-    if not leaf==[]:
-        for j in leaf:
-            print_child(to_todo.find('id',j,todo)[0],incident+2,todo)
-
+def print_child(todo):
+    tree = Tree()
+    tree.create_node('root','root')
+    for i in todo.index:
+        if isnan(todo.at[i, 'father']):
+            tree.create_node(str(i)+' '+todo.at[i, 'name'], todo.at[i, 'id'],'root')
+        else:
+            tree.create_node(str(i)+' '+todo.at[i, 'name'], todo.at[i, 'id'], parent=todo.at[i, 'father'])
+    tree.show()
 
 if __name__ == "__main__":
     today_ddl()

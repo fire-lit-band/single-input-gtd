@@ -153,7 +153,6 @@ def readcsv(file):
 
 
 def tododelete(df,file,key,todo):
-    print(to_todo.find('id',key[0],todo)[0])
     df=df.drop([to_todo.find('id',key[0],todo)[0]])
     return df
 
