@@ -39,9 +39,9 @@ def add_record(Record: Finished):
     column_names.to_csv(file_name, index=False)
 
 
-def delete_todo(content):
+def delete_todo(content,todo):
     # try:
-    exist_todo = pd.read_csv("todo.csv")
+    exist_todo = todo
     df=exist_todo
     content_isin = exist_todo["name"].isin([content])  # 返回是否含有content的表
     #print(content)
@@ -65,9 +65,9 @@ def delete_todo(content):
     # except:
     # print("wrong")
 
-def inbox():
-    df=read_todo.read_all_content()
-    print(read_todo.display_all_task())
+def inbox(todo,file):
+    df=todo
+    print(read_todo.display_all_task(todo))
     fatherpoint=''
     while command:=input("command"):
         if command=='add':
@@ -77,7 +77,7 @@ def inbox():
             df = df.append(pd.Series(new_task), ignore_index=True)
             df.to_csv("todo.csv", index=False)
             if not fatherpoint=='':
-                index=find('id',fatherpoint)[0]
+                index=find('id',fatherpoint,todo)[0]
                 df.at[index, 'leaf'] = eval(df.at[index, 'leaf']) + [timestamp]
 
             break
@@ -85,21 +85,21 @@ def inbox():
             if command.isdigit():
                 # try:
                 command_num=int(command)
-                print(df.iloc[find('id',fatherpoint)].name)
+                print(df.iloc[find('id',fatherpoint,todo)].name)
                 fatherpoint = df.at[command_num, 'id']
                 # except:
                 #     print("wrong")
-    output_csv(df)
+    output_csv(df,file)
 
 
 
-def output_csv(df,file="todo.csv"):
+def output_csv(df,file):
     df.to_csv(file,index=False)
 
 
 
-def find(column_name,content):
-    exist_todo = read_todo.read_all_content()
+def find(column_name,content,todo):
+    exist_todo = todo
     df = exist_todo
     index_with_content = df[df[column_name] == content].index.tolist()
     return index_with_content
@@ -138,7 +138,7 @@ def set_deadline(index):
     ddl=datetime(year,month, day, hour, minute, second).timestamp()
     df=read_todo.read_all_content()
     df.at[index,'start_time']=ddl
-    output_csv()
+    output_csv(df,file)
 
 
 

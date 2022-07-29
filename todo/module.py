@@ -63,9 +63,9 @@ def end_task(current_tasks: Task, reason: str):
     return current_tasks
 
 
-def main(command: str,current_task:Task):
+def main(command: str,current_task:Task,todo):
 
-    data=pd.read_csv("todo.csv")
+    data=todo
     if len(data) == 0:
         print("当前没有数据，请添加数据")
         return "end",current_task
@@ -81,14 +81,14 @@ def main(command: str,current_task:Task):
     if command ==" ": # 这个是用来刷新内容的
         return "done",current_task
     elif command == "ok":
-        to_todo.delete_todo(current_task.task_name)
+        to_todo.delete_todo(current_task.task_name,todo)
         current_task = finished_task(current_task, command)
         return "done",current_task
     elif command in {"p", "!", "~"}:
         current_task = pause_task(current_task, command)
         return "done",current_task
     elif command == "q":
-        to_todo.delete_todo(current_task.task_name)
+        to_todo.delete_todo(current_task.task_name,todo)
         current_task = finished_task(current_task, command)
         return "end",current_task
     else:

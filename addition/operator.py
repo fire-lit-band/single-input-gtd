@@ -51,9 +51,9 @@ def delete_todo(content):
     # except:
     # print("wrong")
 
-def inbox():
+def inbox(todo):
     df=read_todo.read_all_content()
-    print(read_todo.display_all_task())
+    print(read_todo.display_all_task(todo))
     fatherpoint=''
     while command:=input("command"):
         if command=='add':

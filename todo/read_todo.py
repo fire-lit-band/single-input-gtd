@@ -10,19 +10,16 @@ def read_all_content(file="todo.csv"):
     return pd.read_csv(file)
 
 
-def today_inbox_todo(file="todo.csv"):
-    todo = pd.read_csv(file)
+def today_inbox_todo(todo):
     todo=todo[todo.father.isnull() & todo.start_time.isnull()]
     for i in todo.index:
         print_child(i,0,todo)
 
 
-def display_all_task(file="todo.csv"):
-    todo = pd.read_csv(file)
+def display_all_task(todo):
     return todo["name"]
 
-def today_ddl(file="todo.csv"):
-    todo=pd.read_csv(file)
+def today_ddl(todo):
     ddl=todo[todo.father.isnull() & (~todo.start_time.isnull())]
     for i in ddl.index:
         print_child(i,0,todo)
@@ -39,9 +36,9 @@ def remain_time(ddl):
         else:
             return "还剩下"+str(remain_tuple[3])+"小时,"+str(remain_tuple[4])+"分钟"
 
-def display_todo():
-    today_inbox_todo()
-    today_ddl()
+def display_todo(todo):
+    today_inbox_todo(todo)
+    today_ddl(todo)
 
 
 def print_child(i,incident,todo):
@@ -52,7 +49,7 @@ def print_child(i,incident,todo):
         print(" " * incident + str(i) + " " + todo.at[i, 'name'] )
     if not leaf==[]:
         for j in leaf:
-            print_child(to_todo.find('id',j)[0],incident+2,todo)
+            print_child(to_todo.find('id',j,todo)[0],incident+2,todo)
 
 
 if __name__ == "__main__":
