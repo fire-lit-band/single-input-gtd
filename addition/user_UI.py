@@ -163,14 +163,18 @@ def readcsv(file):
     return df,todoTree,layout
 
 def delete_in_tree(df,file,values,window):
-    df = tododelete(df, file, values['TREE'], df)
+    df = tododelete(df, file, values['TREE'])
     df.to_csv(file, index=False)
     df, todoTree, layout = readcsv(file)
     window['TREE'].update(todoTree)
     return df,file,window
 
-def tododelete(df,file,key,todo):
-    df=df.drop([to_todo.find('id',key[0],todo)[0]])
+def tododelete(df,file,key):
+    df=df[df.id!=key[0]]
+
+    if not df[df.father==key[0]].empty:
+        for i in df[df.father==key[0]].id:
+            df=tododelete(df, file, [i])
     df=df[df.father!=key[0]]
     return df
 
@@ -272,8 +276,7 @@ def main():
     while True:     # Event Loop
 
         event, values = window.read()
-        window['TREE'].set_focus(True)
-        print(values)
+        window['TREE'].set_focus(False)
 
         if event in (sg.WIN_CLOSED, 'cancel'):
             break
