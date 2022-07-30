@@ -22,13 +22,13 @@ def add_todo(todo: pd.DataFrame):
     return todo
 
 
-def add_record(Record: Finished):
+def add_record(Record: Finished,file="record_sample.csv"):
     file_name = Path("../time_record", date.today().isoformat()).with_suffix(
         ".csv"
     )
     if not file_name.exists():
-        column_names = pd.read_csv("record_sample.csv")
-        column_names.to_csv(file_name)
+        column_names = pd.read_csv(file)
+        column_names.to_csv(file_name,index=False)
     column_names = pd.read_csv(file_name)
     record = list(Record.format())
     print(record)
