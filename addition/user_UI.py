@@ -118,7 +118,7 @@ def todo_content(key,todoTree,df,file,content=None):
     except TypeError:
         return todoTree
     if havecontent:
-        df=tododelete(df, file, [values['id']], df)
+        df=df.drop([to_todo.find('id',key[0],df)[0]])
 
     df = pd.concat([df, pd.Series(values).to_frame().T], ignore_index=True)
     df.to_csv(file, index=False)
@@ -129,12 +129,20 @@ def readcsv(file):
     todoTree = sg.TreeData()
     df = pd.read_csv(file)
     for i in df.index:
-        parent = df.at[i, "father"]
-        if np.isnan(parent):
-            parent = ""
         key = df.at[i, "id"]
         text = df.at[i, "name"]
-        todoTree.insert(parent, key, text, [])
+        todoTree.insert('',key,text,[])
+    for i in df.index:
+        parent = df.at[i, "father"]
+        key = df.at[i, "id"]
+        text = df.at[i, "name"]
+        if np.isnan(parent):
+            parent = ""
+        todoTree.tree_dict[todoTree.tree_dict[key].parent].children.remove(todoTree.tree_dict[key])
+        todoTree.tree_dict[key].parent=parent
+        todoTree.tree_dict[parent].children.append(todoTree.tree_dict[key])
+
+
 
     layout = [
         [sg.Button('cancel')],
@@ -163,6 +171,7 @@ def delete_in_tree(df,file,values,window):
 
 def tododelete(df,file,key,todo):
     df=df.drop([to_todo.find('id',key[0],todo)[0]])
+    df=df[df.father!=key[0]]
     return df
 
 def finished_delete(todo,file,window,values):
@@ -263,6 +272,8 @@ def main():
     while True:     # Event Loop
 
         event, values = window.read()
+        window['TREE'].set_focus(True)
+        print(values)
 
         if event in (sg.WIN_CLOSED, 'cancel'):
             break
