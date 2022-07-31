@@ -10,9 +10,7 @@ from classes.Task import Task
 from pathlib import Path
 import time
 
-def find(column_name,content,todo):
-    exist_todo = todo
-    df = exist_todo
+def find(column_name,content,df):
     index_with_content = df[df[column_name] == content].index.tolist()
     return index_with_content
 
