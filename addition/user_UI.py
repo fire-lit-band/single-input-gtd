@@ -276,7 +276,6 @@ def main():
     while True:     # Event Loop
 
         event, values = window.read()
-        window['TREE'].set_focus(False)
 
         if event in (sg.WIN_CLOSED, 'cancel'):
             break
