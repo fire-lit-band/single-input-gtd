@@ -1,15 +1,37 @@
 import PySimpleGUI as sg
 import numpy as np
 import pandas as pd
-import calendarUItest as cl
+import function.calendarUItest as cl
+import function.clockUI as clock
 import time
 from datetime import date,datetime
-import clock
-import sys
-sys.path.append('../todo')
-import to_todo
-from Finished import Finished
-from Task import Task
+from classes.Finished import Finished
+from classes.Task import Task
+from pathlib import Path
+import time
+
+def find(column_name,content,todo):
+    exist_todo = todo
+    df = exist_todo
+    index_with_content = df[df[column_name] == content].index.tolist()
+    return index_with_content
+
+
+def add_record(Record: Finished,file="record_sample.csv"):
+    file_name = Path("./time_record", date.today().isoformat()).with_suffix(
+        ".csv"
+    )
+    if not file_name.exists():
+        column_names = pd.read_csv(file)
+        column_names.to_csv(file_name,index=False)
+    column_names = pd.read_csv(file_name)
+    record = list(Record.format())
+    print(record)
+    new_record = dict(zip(column_names, record))
+    column_names = column_names.append(
+        pd.Series(new_record), ignore_index=True
+    )
+    column_names.to_csv(file_name, index=False)
 
 def set_default(key,values,datetuple,content,havecontent):
     if not havecontent:
@@ -118,7 +140,7 @@ def todo_content(key,todoTree,df,file,content=None):
     except TypeError:
         return todoTree
     if havecontent:
-        df=df.drop([to_todo.find('id',key[0],df)[0]])
+        df=df.drop([find('id',key[0],df)[0]])
 
     df = pd.concat([df, pd.Series(values).to_frame().T], ignore_index=True)
     df.to_csv(file, index=False)
@@ -259,13 +281,13 @@ def end_task(current_tasks: Task, reason: str):
         actshift=0,
         reason=reason,
     )
-    to_todo.add_record(record,'../todo/record_sample.csv')
+    add_record(record,'./data/record_sample.csv')
     return current_tasks
 
 
 
 def main():
-    file='../todo.csv'
+    file='./data/todo.csv'
     df,todoTree,layout=readcsv(file)
 
 
@@ -289,14 +311,14 @@ def main():
         if event=='delete':
             df,file,window=delete_in_tree(df,file,values,window)
         if event=='revise':
-            content=dict(df.loc[to_todo.find('id',values['TREE'][0],df)[0]])
+            content=dict(df.loc[find('id',values['TREE'][0],df)[0]])
             content['hour']=''
             content['minute']=''
             todo_content(values['TREE'], todoTree, df, file,content)
             df, todoTree, layout = readcsv(file)
             window['TREE'].update(todoTree)
         if event=='start':
-            current_task = begin_task(current_task, df.at[to_todo.find('id',values['TREE'][0],df)[0], 'name'])
+            current_task = begin_task(current_task, df.at[find('id',values['TREE'][0],df)[0], 'name'])
             start_time,endtime,clockevent,paused=clock.main(current_task.task_name)
             if clockevent=='-Finished-':
                 current_task = finished_task(current_task, 'q')
