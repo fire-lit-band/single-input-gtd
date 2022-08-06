@@ -1,3 +1,2 @@
-cd "E:\single-input-gtd\todo"
-CALL conda activate test
-python UI.py
+C:\Users\PRAGM\anaconda3\envs\test\python.exe user_UI.py
+

@@ -42,27 +42,32 @@ def main(task_name):
                        element_padding=(0, 0),
                        finalize=True,
                        element_justification='c',
-                       right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_EXIT)
+                       right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_EXIT,return_keyboard_events=True)
 
     current_time, paused_time, paused = 0, 0, False
     start_time = time_as_int()
+    QT_ENTER_KEY1 = 'special 16777220'
+    QT_ENTER_KEY2 = 'special 16777221'
 
     while True:
         # --------- Read and update window --------
         if not paused:
             event, values = window.read(timeout=10)
+
             current_time = time_as_int() - start_time
         else:
             event, values = window.read()
         # --------- Do Button Operations --------
+        print(event, values)
         if event in (sg.WIN_CLOSED, 'Exit'):
             paused_time=time_as_int()
             # ALWAYS give a way out of program
             break
-        if event == '-Finished-':
+        if event in ('-Finished-','\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
+            event='-Finished-'
             paused_time = time_as_int()
             break
-        elif event == '-RUN-PAUSE-':
+        elif event in ('-RUN-PAUSE-',' '):
             paused = not paused
             if paused:
                 paused_time = time_as_int()
