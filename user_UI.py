@@ -10,6 +10,9 @@ from classes.Task import Task
 from pathlib import Path
 import time
 
+QT_ENTER_KEY1 = 'special 16777220'
+QT_ENTER_KEY2 = 'special 16777221'
+
 def find(column_name,content,df):
     index_with_content = df[df[column_name] == content].index.tolist()
     return index_with_content
@@ -26,9 +29,7 @@ def add_record(Record: Finished,file="record_sample.csv"):
     record = list(Record.format())
     print(record)
     new_record = dict(zip(column_names, record))
-    column_names = column_names.append(
-        pd.Series(new_record), ignore_index=True
-    )
+    column_names = pd.concat([column_names, pd.Series(new_record).to_frame().T], ignore_index=True)
     column_names.to_csv(file_name, index=False)
 
 def set_default(key,values,datetuple,content,havecontent):
@@ -97,7 +98,7 @@ def set_default(key,values,datetuple,content,havecontent):
 
 def todo_content(key,todoTree,df,file,content=None):
     if content==None:
-        content={'name':'','num':'','hour':'','minute':'','repetition_gap':'','task_value':''}
+        content={'name':'','num':'','hour':'','minute':'','repetition_gap':1,'task_value':''}
         datetuple = None
         havecontent=False
     else:
@@ -120,16 +121,17 @@ def todo_content(key,todoTree,df,file,content=None):
               [sg.Text('个人感官价值')], [sg.Input(content['task_value'],key='task_value')],
 
               [sg.Button('cancel'), sg.Button('ok')]]
-    windowadd = sg.Window('add', layout)
+    windowadd = sg.Window('add', layout,return_keyboard_events=True)
 
     while True:  # Event Loop
         event, values = windowadd.read()
-        if event in (sg.WIN_CLOSED, 'cancel'):
+        if event in (sg.WIN_CLOSED, 'cancel','Escape:27'):
             windowadd.close()
             return todoTree
-        if event == 'ok':
+        if event in  ('ok','\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
             break
         if event == 'date':
+            datetuple = cl.popup_get_date()
             datetuple = cl.popup_get_date()
             windowadd['date_tuple'].update(str(datetuple))
     windowadd.close()
@@ -168,14 +170,16 @@ def readcsv(file):
         [sg.Button('cancel')],
         [sg.Tree(data=todoTree, headings=['Size', ],
                  auto_size_columns=True,
-                 select_mode=sg.TABLE_SELECT_MODE_EXTENDED,
+                 select_mode=sg.TABLE_SELECT_MODE_BROWSE,
+
                  num_rows=20,
                  col0_width=40,
                  key='TREE',
-                 show_expanded=False,
+                 show_expanded=True,
                  enable_events=True,
                  expand_x=True,
-                 expand_y=True)],
+                 expand_y=True,right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_EXIT)],
+        [sg.Input(key='IN')],
         [sg.Button('add'),sg.Button('clear')],
         [sg.Button('delete'),sg.Button('revise')],
         [sg.Button('start')]
@@ -208,7 +212,7 @@ def finished_delete(todo,file,window,values):
 
     if content_isin.any():  # 先判断一下有没有这一行，如果没有提早报错
         index_with_content=df[df.id==content].index.tolist()[0]
-        num_of_sub=exist_todo.num.loc[index_with_content]
+        num_of_sub=exist_todo.at[index_with_content,'repetition_gap']
         if num_of_sub == 0:  # 0就是无穷次
             remain_todo = exist_todo
         elif num_of_sub == 1:
@@ -265,11 +269,13 @@ def begin_task(current_task: Task, task_name: str):
 def end_task(current_tasks: Task, reason: str):
     current_tasks.end_time = datetime.now()
     layout=[[sg.Text("请输入你完成的内容")],[sg.Input()],[sg.Button('ok')]]
-    window=sg.Window("请输入你完成的内容",layout)
-    event,subname=window.read()
-    subname=subname[0]
-    if event=='ok':
-        window.close()
+    window=sg.Window("请输入你完成的内容",layout,return_keyboard_events=True)
+    while True:
+        event,subname=window.read()
+        subname=subname[0]
+        if event in ('ok','\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
+            window.close()
+            break
     record = Finished(
         name=current_tasks.task_name,
         subname=subname,
@@ -289,15 +295,16 @@ def main():
     df,todoTree,layout=readcsv(file)
 
 
-    window = sg.Window('用户输入部分', layout,finalize=True)
+    window = sg.Window('用户输入部分', layout,finalize=True,return_keyboard_events=True)
     current_task=Task()
 
 
     while True:     # Event Loop
 
         event, values = window.read()
+        print(event,values)
 
-        if event in (sg.WIN_CLOSED, 'cancel'):
+        if event in (sg.WIN_CLOSED, 'cancel','Escape:27'):
             break
         if event =='add':
 
@@ -315,7 +322,7 @@ def main():
             todo_content(values['TREE'], todoTree, df, file,content)
             df, todoTree, layout = readcsv(file)
             window['TREE'].update(todoTree)
-        if event=='start':
+        if event in ('start',' '):
             current_task = begin_task(current_task, df.at[find('id',values['TREE'][0],df)[0], 'name'])
             start_time,endtime,clockevent,paused=clock.main(current_task.task_name)
             if clockevent=='-Finished-':
@@ -325,12 +332,51 @@ def main():
                 if paused==True:
                     current_task = pause_task(current_task, 'p')
 
+        # 下面是键盘映射
+
+        if event in ('\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
+            if values['IN']!='':
+                newcontent={'name':values['IN'],'id':time.time(),'repetition_gap':1}
+                df = pd.concat([df, pd.Series(newcontent).to_frame().T], ignore_index=True)
+                df.to_csv(file, index=False)
+                df, todoTree, layout = readcsv(file)
+                window['TREE'].update(todoTree)
+                window['IN'].update('')
+            if values['IN']=='':
+                if values['TREE']:
+                    content = dict(df.loc[find('id', values['TREE'][0], df)[0]])
+                    content['hour'] = ''
+                    content['minute'] = ''
+                    todo_content(values['TREE'], todoTree, df, file, content)
+                    df, todoTree, layout = readcsv(file)
+                    window['TREE'].update(todoTree)
+        if event=='Edit Me':
+            if values['TREE']:
+                content = dict(df.loc[find('id', values['TREE'][0], df)[0]])
+                content['hour'] = ''
+                content['minute'] = ''
+                todo_content(values['TREE'], todoTree, df, file, content)
+                df, todoTree, layout = readcsv(file)
+                window['TREE'].update(todoTree)
+        if event=='Delete:46':
+            df, file, window = delete_in_tree(df, file, values, window)
+        if event in ('Down:40'):
+            if values['TREE']==[]:
+                values['TREE']=df.at[0,'id']
+                window['TREE'].update(todoTree)
+        if event in ('+'):
+            todo_content(values['TREE'], todoTree, df, file)
+            df, todoTree, layout = readcsv(file)
+            window['TREE'].update(todoTree)
+
+
+
+
 
 
 
 
     window.close()
-
 
 if __name__=="__main__":
     main()
