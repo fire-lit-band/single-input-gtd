@@ -105,9 +105,10 @@ def todo_content(key,todoTree,df,file,content=None):
         havecontent=True
         if not np.isnan(content['start_time']):
             struct_times=time.localtime(content['start_time'])
-            datetuple=[struct_times.year,struct_times.month,struct_times.day]
-            content['hour']=struct_times.hour
-            content['minute'] = struct_times.minute
+            print(struct_times)
+            datetuple=[struct_times.tm_year,struct_times.tm_mon,struct_times.tm_mday]
+            content['hour']=struct_times.tm_hour
+            content['minute'] = struct_times.tm_min
         else:
             datetuple=None
     layout = [[sg.Text('名字')], [sg.Input(content['name'],key='name')],
