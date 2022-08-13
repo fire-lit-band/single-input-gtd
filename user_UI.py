@@ -172,7 +172,6 @@ def readcsv(file):
         [sg.Tree(data=todoTree, headings=['Size', ],
                  auto_size_columns=True,
                  select_mode=sg.TABLE_SELECT_MODE_BROWSE,
-
                  num_rows=20,
                  col0_width=40,
                  key='TREE',
