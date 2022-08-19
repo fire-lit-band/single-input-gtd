@@ -181,12 +181,14 @@ def cauculate_ddl(start_time):
                 return str(delta1.min) + '分'+str(delta1.seconds)+'秒'
 
 
-
+def option(df):
+    return df.sort_values(by='start_time',inplace=False)
 
 
 def readcsv(file): #读文件 ，并生成树状结构
     todoTree = sg.TreeData()
     df = pd.read_csv(file)
+    df=option(df)
     df1=df[pd.isna(df['father'])]
     df2=df[np.logical_not(pd.isna(df['father']))]
     for i in df1.index:
