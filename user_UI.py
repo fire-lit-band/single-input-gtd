@@ -124,10 +124,11 @@ def add_content(key,df,file):  #
     #         content['minute'] = struct_times.tm_min
     #     else:
     #         datetuple=None
-    values=content_interface(key,content,datetuple)
-    values['father']=key
-    df = pd.concat([df, pd.Series(values).to_frame().T], ignore_index=True)
-    df.to_csv(file, index=False)
+    values,check=content_interface(key,content,datetuple)
+    values['father']=key[0]
+    if check:
+        df = pd.concat([df, pd.Series(values).to_frame().T], ignore_index=True)
+        df.to_csv(file, index=False)
 
 
 def content_interface(key,content,datetuple):
@@ -148,7 +149,7 @@ def content_interface(key,content,datetuple):
         event, values = windowadd.read()
         if event in (sg.WIN_CLOSED, 'cancel','Escape:27'):
             windowadd.close()
-            return values
+            return values,False
         if event in  ('ok','\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
             break
         if event == 'date':
@@ -157,7 +158,7 @@ def content_interface(key,content,datetuple):
     windowadd.close()
     values['id']=key
     values = set_default(key, values, datetuple,content)
-    return values
+    return values,True
 
 def cauculate_ddl(start_time):
     now=datetime.now()
@@ -221,7 +222,7 @@ def readcsv(file): #读文件 ，并生成树状结构
                  expand_x=True,
                  expand_y=True,right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_EXIT)],
         [sg.Input(key='IN')],
-        [sg.Button('add'),sg.Button('clear')],
+        [sg.Button('add'),sg.Button('clear'),sg.Button('clear all')],
         [sg.Button('delete'),sg.Button('revise')],
         [sg.Button('start')]
     ]
@@ -333,6 +334,7 @@ def end_task(current_tasks: Task, reason: str): # 任务结束记录
 
 def main():
     file='./data/todo.csv'
+    todo_tempalate='./data/todo_tempalate.csv'
     df,todoTree,layout=readcsv(file)
 
 
@@ -361,6 +363,11 @@ def main():
             content['hour']=''
             content['minute']=''
             revise_content(values['TREE'], df, file,content)
+            df, todoTree, layout = readcsv(file)
+            window['TREE'].update(todoTree)
+        if event=='clear all':
+            df=pd.read_csv(todo_tempalate)
+            df.to_csv(file,index=False)
             df, todoTree, layout = readcsv(file)
             window['TREE'].update(todoTree)
         if event in ('start',' '):
