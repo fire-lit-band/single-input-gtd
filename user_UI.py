@@ -101,12 +101,12 @@ def revise_content(key,df,file,content):
         content['minute'] = struct_times.tm_min
     else:
         datetuple = None
-    values=content_interface(key, content, datetuple)
+    values,check=content_interface(key, content, datetuple)
     #print(find('id',key[0],df)[0])
-    print(values)
-    df.loc[find('id',key[0],df)[0]]=values
+    if check:
+        df.loc[find('id',key[0],df)[0]]=values
 
-    df.to_csv(file, index=False)
+        df.to_csv(file, index=False)
 
 
 def add_content(key,df,file):  #
@@ -127,7 +127,7 @@ def add_content(key,df,file):  #
     values,check=content_interface(key,content,datetuple)
     values['father']=key[0]
     if check:
-        df = pd.concat([df, pd.Series(values).to_frame().T], ignore_index=True)
+        df = pd.concat([ pd.Series(values).to_frame().T,df], ignore_index=True)
         df.to_csv(file, index=False)
 
 
@@ -386,7 +386,7 @@ def main():
         if event in ('\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
             if values['IN']!='':
                 newcontent={'name':values['IN'],'id':time.time(),'repetition_gap':1}
-                df = pd.concat([df, pd.Series(newcontent).to_frame().T], ignore_index=True)
+                df = pd.concat([ pd.Series(newcontent).to_frame().T,df], ignore_index=True)
                 df.to_csv(file, index=False)
                 df, todoTree, layout = readcsv(file)
                 window['TREE'].update(todoTree)
