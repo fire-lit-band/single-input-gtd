@@ -125,6 +125,7 @@ def add_content(key,df,file):  #
     #     else:
     #         datetuple=None
     values,check=content_interface(key,content,datetuple)
+    print(key)
     values['father']=key[0]
     if check:
         df = pd.concat([ pd.Series(values).to_frame().T,df], ignore_index=True)
@@ -351,6 +352,8 @@ def main():
         if event in (sg.WIN_CLOSED, 'cancel','Escape:27'):
             break
         if event =='add':
+            if values['TREE']==[]:
+                values['TREE']=['']
             add_content(values['TREE'],df,file)
             df, todoTree, layout = readcsv(file)
             window['TREE'].update(todoTree)
@@ -384,7 +387,7 @@ def main():
         # 下面是键盘映射
 
         if event in ('\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
-            if values['IN']!='':
+            if not type(element)==type(window['TREE']):
                 newcontent={'name':values['IN'],'id':time.time(),'repetition_gap':1}
                 df = pd.concat([ pd.Series(newcontent).to_frame().T,df], ignore_index=True)
                 df.to_csv(file, index=False)
