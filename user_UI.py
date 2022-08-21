@@ -181,7 +181,8 @@ def cauculate_ddl(start_time):
             if delta1.days>=1:
                 return str(delta1.days)+'天'
             else:
-                return str(delta1.min) + '分'+str(delta1.seconds)+'秒'
+                print(delta1)
+                return str(delta1.seconds//3600) + '时'+str((delta1.seconds//60)%60)+'分'
 
 
 def option(df):
