@@ -1,5 +1,5 @@
 plan.md
-./data/todo.csv
+data/todo.csv
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
