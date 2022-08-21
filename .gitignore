@@ -1,4 +1,5 @@
 plan.md
+./data/todo.csv
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -132,4 +133,3 @@ dmypy.json
 .vscode/
 .idea/
 
-./data/todo.csv
