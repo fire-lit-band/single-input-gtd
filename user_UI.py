@@ -9,6 +9,7 @@ from classes.Finished import Finished
 from classes.Task import Task
 from pathlib import Path
 import time
+import function.init_todo
 
 QT_ENTER_KEY1 = 'special 16777220'
 QT_ENTER_KEY2 = 'special 16777221'
@@ -336,6 +337,7 @@ def end_task(current_tasks: Task, reason: str): # 任务结束记录
 def main():
     file='./data/todo.csv'
     todo_tempalate='./data/todo_tempalate.csv'
+
     df,todoTree,layout=readcsv(file)
 
 
