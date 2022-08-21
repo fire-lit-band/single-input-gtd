@@ -4,6 +4,7 @@ data/todo.csv
 untitled.py
 untitled.ui
 Pyqt_user.py
+test.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
