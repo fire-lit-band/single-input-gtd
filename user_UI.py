@@ -9,7 +9,7 @@ from classes.Finished import Finished
 from classes.Task import Task
 from pathlib import Path
 import time
-import function.init_todo
+import function.init_daily as daily
 
 QT_ENTER_KEY1 = 'special 16777220'
 QT_ENTER_KEY2 = 'special 16777221'
@@ -94,6 +94,7 @@ def set_default(key,values,datetuple,content): # 设置日期的时候的一些�
     del values['hour'],values['minute']
     return values
 def revise_content(key,df,file,content):
+    df=pd.read_csv(file)
     if not np.isnan(content['start_time']):
         struct_times = time.localtime(content['start_time'])
         print(struct_times)
@@ -110,7 +111,7 @@ def revise_content(key,df,file,content):
         df.to_csv(file, index=False)
 
 
-def add_content(key,df,file):  #
+def add_content(key,df,file,todo_daily):  #
     # if content==None:
     content={'name':'','num':'','hour':'','minute':'','repetition_gap':1,'task_value':''}
     datetuple = None
@@ -129,6 +130,7 @@ def add_content(key,df,file):  #
     print(key)
     values['father']=key[0]
     if check:
+        df = pd.read_csv(file)
         df = pd.concat([ pd.Series(values).to_frame().T,df], ignore_index=True)
         df.to_csv(file, index=False)
 
@@ -189,9 +191,9 @@ def option(df):
     return df.sort_values(by='start_time',inplace=False)
 
 
-def readcsv(file): #读文件 ，并生成树状结构
+def readcsv(file,todo_daily_file): #读文件 ，并生成树状结构
     todoTree = sg.TreeData()
-    df = pd.read_csv(file)
+    df = daily.init(file,todo_daily_file)
     df=option(df)
     df1=df[pd.isna(df['father'])]
     df2=df[np.logical_not(pd.isna(df['father']))]
@@ -231,12 +233,10 @@ def readcsv(file): #读文件 ，并生成树状结构
     ]
     return df,todoTree,layout
 
-def delete_in_tree(df,file,values,window): # 删除树状图里面的内容
+def delete_in_tree(df,file,values,window): #直接删除主todo里的内容
+    df=pd.read_csv(file)# 删除树状图里面的内容
     df = tododelete(df, file, values['TREE'])
     df.to_csv(file, index=False)
-    df, todoTree, layout = readcsv(file)
-    window['TREE'].update(todoTree)
-    return df,file,window
 
 def tododelete(df,file,key):  # 删除数据里面的内容
     df=df[df.id!=key[0]]
@@ -247,31 +247,33 @@ def tododelete(df,file,key):  # 删除数据里面的内容
     df=df[df.father!=key[0]]
     return df
 
-def finished_delete(todo,file,window,values): # 任务结束后删除内容
+def finished_delete(todo,file,values,todo_daily): # 任务结束后删除内容
     # try:
-    exist_todo = todo
-    df=exist_todo
+    df=todo
     content=values['TREE'][0]
-    content_isin = exist_todo["id"].isin([content])  # 返回是否含有content的表
+    content_isin = todo["id"].isin([content])  # 返回是否含有content的表
+    daily_name = Path(todo_daily, date.today().isoformat()).with_suffix(".csv")
+    today=pd.read_csv(daily_name)
+    today.drop(index=today[today['id']==values].index.tolist()[0])
+    today.read_csv(daily_name,index=False)
     #print(content)
 
     if content_isin.any():  # 先判断一下有没有这一行，如果没有提早报错
         index_with_content=df[df.id==content].index.tolist()[0]
-        num_of_sub=exist_todo.at[index_with_content,'repetition_gap']
+        num_of_sub=todo.at[index_with_content,'num']
         if num_of_sub == 0:  # 0就是无穷次
-            remain_todo = exist_todo
+            remain_todo = todo
         elif num_of_sub == 1:
-            remain_todo = exist_todo[~content_isin]  # 也就是直接删了
+            remain_todo = todo[~content_isin]  # 也就是直接删了
         else:  # 数量减少一次
-            remain_todo = exist_todo
+            remain_todo = todo
             remain_todo.loc[
                 remain_todo["id"] == content, ["num"]
             ] -= 1
         df=remain_todo
         df.to_csv(file, index=False)
-        df, todoTree, layout = readcsv(file)
-        window['TREE'].update(todoTree)
-        return df, file,  window
+
+
     else:
         print("wrong")
         return False
@@ -338,8 +340,10 @@ def end_task(current_tasks: Task, reason: str): # 任务结束记录
 def main():
     file='./data/todo.csv'
     todo_tempalate='./data/todo_tempalate.csv'
+    todo_daily_file='./dailytodo'
+    daily_name = Path(todo_daily_file, date.today().isoformat()).with_suffix(".csv")
 
-    df,todoTree,layout=readcsv(file)
+    df,todoTree,layout=readcsv(file,todo_daily_file)
 
 
     window = sg.Window('用户输入部分', layout,finalize=True,return_keyboard_events=True)
@@ -357,24 +361,26 @@ def main():
         if event =='add':
             if values['TREE']==[]:
                 values['TREE']=['']
-            add_content(values['TREE'],df,file)
-            df, todoTree, layout = readcsv(file)
+            add_content(values['TREE'],df,file,daily_name)
+            df, todoTree, layout = readcsv(file,todo_daily_file)
             window['TREE'].update(todoTree)
         if event=='clear':
             window['TREE'].update(todoTree)
         if event=='delete':
-            df,file,window=delete_in_tree(df,file,values,window)
+            delete_in_tree(df,file,values,window)
+            df, todoTree, layout = readcsv(file,todo_daily_file)
+            window['TREE'].update(todoTree)
         if event=='revise':
             content=dict(df.loc[find('id',values['TREE'][0],df)[0]])
             content['hour']=''
             content['minute']=''
             revise_content(values['TREE'], df, file,content)
-            df, todoTree, layout = readcsv(file)
+            df, todoTree, layout = readcsv(file,todo_daily_file)
             window['TREE'].update(todoTree)
         if event=='clear all':
             df=pd.read_csv(todo_tempalate)
             df.to_csv(file,index=False)
-            df, todoTree, layout = readcsv(file)
+            df, todoTree, layout = readcsv(file,todo_daily_file)
             window['TREE'].update(todoTree)
         if event in ('start',' '):
             if type(element)==type(window['TREE']):
@@ -382,19 +388,21 @@ def main():
                 start_time,endtime,clockevent,paused=clock.main(current_task.task_name)
                 if clockevent=='-Finished-':
                     current_task = finished_task(current_task, 'q')
-                    df,file,window=finished_delete(df,file,window,values)
+                    finished_delete(df,file,values,todo_daily_file)
+                    df, todoTree, layout = readcsv(file,todo_daily_file)
+                    window['TREE'].update(todoTree)
+
                 if clockevent in (sg.WIN_CLOSED, 'Exit','-RUN-PAUSE-'):
-                    if paused==True:
-                        current_task = pause_task(current_task, 'p')
+                    current_task = pause_task(current_task, 'p')
 
         # 下面是键盘映射
 
         if event in ('\r', QT_ENTER_KEY1, QT_ENTER_KEY2):
             if not type(element)==type(window['TREE']):
-                newcontent={'name':values['IN'],'id':time.time(),'repetition_gap':1}
+                newcontent={'name':values['IN'],'id':time.time(),'num':1,'fixed':'False'}
                 df = pd.concat([ pd.Series(newcontent).to_frame().T,df], ignore_index=True)
                 df.to_csv(file, index=False)
-                df, todoTree, layout = readcsv(file)
+                df, todoTree, layout = readcsv(file,todo_daily_file)
                 window['TREE'].update(todoTree)
                 window['IN'].update('')
             if values['IN']=='':
@@ -403,7 +411,7 @@ def main():
                     content['hour'] = ''
                     content['minute'] = ''
                     revise_content(values['TREE'], df, file, content)
-                    df, todoTree, layout = readcsv(file)
+                    df, todoTree, layout = readcsv(file,todo_daily_file)
                     window['TREE'].update(todoTree)
         if event=='Edit Me':
             if values['TREE']:
@@ -411,17 +419,21 @@ def main():
                 content['hour'] = ''
                 content['minute'] = ''
                 revise_content(values['TREE'], df, file, content)
-                df, todoTree, layout = readcsv(file)
+                df, todoTree, layout = readcsv(file,todo_daily_file)
                 window['TREE'].update(todoTree)
         if event=='Delete:46':
-            df, file, window = delete_in_tree(df, file, values, window)
+            delete_in_tree(df, file, values, window)
+            df, todoTree, layout = readcsv(file,todo_daily_file)
+            window['TREE'].update(todoTree)
         if event in ('Down:40'):
             if values['TREE']==[]:
+                # tree=window['TREE']
+                # tree.widget.selection_set(key=df.at[0,'id'])
                 values['TREE']=df.at[0,'id']
                 window['TREE'].update(todoTree)
         if event in ('+'):
-            add_content(values['TREE'], df, file)
-            df, todoTree, layout = readcsv(file)
+            add_content(values['TREE'], df, file,daily_name)
+            df, todoTree, layout = readcsv(file,todo_daily_file)
             window['TREE'].update(todoTree)
 
 
@@ -435,4 +447,4 @@ def main():
 
 if __name__=="__main__":
     main()
-    # 0.00001
+    # 0.00002关于次数的内容更新
