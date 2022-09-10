@@ -39,6 +39,7 @@ def init(file,todo_daily):
         column_names = pd.read_csv('./data/daily_todo.csv')
         column_names.to_csv(yesterday_name, index=False)
     df=pd.read_csv(file)
+
     yesterday=pd.read_csv(yesterday_name)
     todaylist=[]
     droplist=[]
@@ -85,17 +86,18 @@ def init(file,todo_daily):
     #                     if df.at[i, 'fixed'] == 'True':
     #                         droplist.append(i)
     for i in yesterday.index:
-        if (yesterday.at[i,'status']=='done') or \
-                (datetime.fromtimestamp(int(df.at[i,'start_time'])) -datetime.now()<=timedelta(0) and yesterday.at[i,'fixed']=='True'):
-            key = df.at[i, 'id']
-            index = df[df['id'] == key].index.tolist()[0]
-            num = df.at[index, 'num']
-            if np.isnan(num) or num != 1 :
-                todaylist.append(index)
-                if num >= 2:
-                    df.at[i, 'num'] -= 1
-            else:
-                df.drop(index=index)
+        if not np.isnan(yesterday.at[i, 'start_time']):
+            if (yesterday.at[i,'status']=='done') or \
+                    (datetime.fromtimestamp(int(yesterday.at[i,'start_time'])) -datetime.now()<=timedelta(0) and yesterday.at[i,'fixed']=='True'):
+                key = df.at[i, 'id']
+                index = df[df['id'] == key].index.tolist()[0]
+                num = df.at[index, 'num']
+                if np.isnan(num) or num != 1 :
+                    todaylist.append(index)
+                    if num >= 2:
+                        df.at[i, 'num'] -= 1
+                else:
+                    df.drop(index=index)
 
     for i in df.index: #先看有时间的这些
         if not np.isnan(df.at[i, 'start_time']):
@@ -108,15 +110,20 @@ def init(file,todo_daily):
                     todaylist.append(i)
                 else:
 
-                    for j in range(int(num)):
+                    for j in range(int(num)+1):
                         if delta1==timedelta(j):
                             todaylist.append(i)
                             break
+            else:
+                todaylist.append(i)
         else:
             todaylist.append(i)
     df.to_csv(file,index=False)
-    df.loc[todaylist].to_csv(daily_name,index=False)
-    return df.loc[todaylist]
+    today=df.loc[todaylist]
+    if 'status' not in today.columns:
+        today.insert(loc=len(today.columns),column='status',value=['unfinished' for i in range(len(today.index))])
+    today.to_csv(daily_name,index=False)
+    return today
 
 
 

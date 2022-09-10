@@ -113,7 +113,7 @@ def revise_content(key,df,file,content):
 
 def add_content(key,df,file,todo_daily):  #
     # if content==None:
-    content={'name':'','num':'','hour':'','minute':'','repetition_gap':1,'task_value':''}
+    content={'name':'','num':1,'hour':'','minute':'','repetition_gap':0,'task_value':''}
     datetuple = None
     havecontent=False
     # else:
@@ -191,26 +191,42 @@ def option(df):
     return df.sort_values(by='start_time',inplace=False)
 
 
-def readcsv(file,todo_daily_file): #读文件 ，并生成树状结构
+def readcsv(file,todo_daily_file,isexpand=False): #读文件 ，并生成树状结构
     todoTree = sg.TreeData()
     df = daily.init(file,todo_daily_file)
     df=option(df)
     df1=df[pd.isna(df['father'])]
-    df2=df[np.logical_not(pd.isna(df['father']))]
-    for i in df1.index:
-        key = df.at[i, "id"]
-        text = df.at[i, "name"]
-        ddl=cauculate_ddl(df.at[i,'start_time'])
-        todoTree.insert('',key,text,[ddl])
-    for i in df2.index:
-        parent = df.at[i, "father"]
-        key = df.at[i, "id"]
-        text = df.at[i, "name"]
-        ddl = cauculate_ddl(df.at[i, 'start_time'])
-        #todoTree.tree_dict[todoTree.tree_dict[key].parent].children.remove(todoTree.tree_dict[key])
-        # todoTree.tree_dict[key].parent=parent
-        # todoTree.tree_dict[parent].children.append(todoTree.tree_dict[key])
-        todoTree.insert(parent, key, text, [ddl])
+    while not df1.empty:
+        keyset=[]
+        for i in df1.index:
+            parent = df.at[i, "father"]
+            key = df.at[i, "id"]
+            keyset.append(key)
+            text = df.at[i, "name"]
+            ddl = cauculate_ddl(df.at[i, 'start_time'])
+            if np.isnan(parent):
+                todoTree.insert('', key, text, [ddl])
+            else:
+                todoTree.insert(parent, key, text, [ddl])
+        df1= pd.DataFrame()
+        for k in keyset:
+            df2=df[df["father"]==k]
+            df1=pd.concat([df1,df2],axis=0)
+
+
+
+    #
+    # print(todoTree)
+    # for i in df2.index:
+    #
+    #     key = df.at[i, "id"]
+    #     text = df.at[i, "name"]
+    #     ddl = cauculate_ddl(df.at[i, 'start_time'])
+    #     #todoTree.tree_dict[todoTree.tree_dict[key].parent].children.remove(todoTree.tree_dict[key])
+    #     # todoTree.tree_dict[key].parent=parent
+    #     # todoTree.tree_dict[parent].children.append(todoTree.tree_dict[key])
+    #     print(parent)
+    #     todoTree.insert(parent, key, text, [ddl])
 
 
 
@@ -222,7 +238,7 @@ def readcsv(file,todo_daily_file): #读文件 ，并生成树状结构
                  num_rows=20,
                  col0_width=40,
                  key='TREE',
-                 show_expanded=True,
+                 show_expanded=isexpand,
                  enable_events=True,
                  expand_x=True,
                  expand_y=True,right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_EXIT)],
@@ -247,30 +263,38 @@ def tododelete(df,file,key):  # 删除数据里面的内容
     df=df[df.father!=key[0]]
     return df
 
-def finished_delete(todo,file,values,todo_daily): # 任务结束后删除内容
+def finished_delete(df,file,values,todo_daily): # 任务结束后删除内容
     # try:
-    df=todo
+    df
     content=values['TREE'][0]
-    content_isin = todo["id"].isin([content])  # 返回是否含有content的表
-    daily_name = Path(todo_daily, date.today().isoformat()).with_suffix(".csv")
-    today=pd.read_csv(daily_name)
-    today.drop(index=today[today['id']==values].index.tolist()[0])
-    today.read_csv(daily_name,index=False)
+    content_isin = df["id"].isin([content])  # 返回是否含有content的表
+    # daily_name = Path(todo_daily, date.today().isoformat()).with_suffix(".csv")
+    # today=pd.read_csv(daily_name)
+    # today.drop(index=today[today['id']==values].index.tolist()[0])
+    # today.read_csv(daily_name,index=False)
     #print(content)
 
     if content_isin.any():  # 先判断一下有没有这一行，如果没有提早报错
         index_with_content=df[df.id==content].index.tolist()[0]
-        num_of_sub=todo.at[index_with_content,'num']
-        if num_of_sub == 0:  # 0就是无穷次
-            remain_todo = todo
-        elif num_of_sub == 1:
-            remain_todo = todo[~content_isin]  # 也就是直接删了
-        else:  # 数量减少一次
-            remain_todo = todo
-            remain_todo.loc[
-                remain_todo["id"] == content, ["num"]
-            ] -= 1
-        df=remain_todo
+        num_of_sub=df.at[index_with_content,'num']
+        gap=df.at[index_with_content,'repetition_gap']
+        start_time=df.at[index_with_content,'start_time']
+        if num_of_sub==1:
+            df= df[~content_isin]
+        else :  # 0就是无穷次
+            if np.isnan(start_time):
+                start_time=time.time()
+            if np.isnan(gap):
+                start_time=np.nan
+            if not np.isnan(start_time):
+                # update,start_time
+                start_time=time.mktime((datetime.fromtimestamp(start_time)+timedelta(days=gap)).timetuple())
+                df.at[index_with_content,'start_time']=start_time
+            if np.isnan(num_of_sub) or num_of_sub==0:
+                df=df
+            if num_of_sub >=2:
+                df.at[index_with_content,'num']-=1
+
         df.to_csv(file, index=False)
 
 
@@ -346,7 +370,7 @@ def main():
     df,todoTree,layout=readcsv(file,todo_daily_file)
 
 
-    window = sg.Window('用户输入部分', layout,finalize=True,return_keyboard_events=True)
+    window = sg.Window('用户输入部分', layout,finalize=True,return_keyboard_events=True,resizable=True,auto_size_text=True)
     current_task=Task()
 
 
@@ -447,4 +471,4 @@ def main():
 
 if __name__=="__main__":
     main()
-    # 0.00002关于次数的内容更新
+    # 0.00003 bug更新（比如框格大小可以调整，以及添加子项目的一些问题）
