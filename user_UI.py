@@ -365,6 +365,7 @@ def main():
     file='./data/todo.csv'
     todo_tempalate='./data/todo_tempalate.csv'
     todo_daily_file='./dailytodo'
+    Path('./dailytodo').mkdir(parents=True, exist_ok=True)
     daily_name = Path(todo_daily_file, date.today().isoformat()).with_suffix(".csv")
 
     df,todoTree,layout=readcsv(file,todo_daily_file)

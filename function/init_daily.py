@@ -38,6 +38,9 @@ def init(file,todo_daily):
     if not yesterday_name.exists():
         column_names = pd.read_csv('./data/daily_todo.csv')
         column_names.to_csv(yesterday_name, index=False)
+    if not Path(file).exists():
+        column_names = pd.read_csv('./data/todo_tempalate.csv')
+        column_names.to_csv(file, index=False)
     df=pd.read_csv(file)
 
     yesterday=pd.read_csv(yesterday_name)
