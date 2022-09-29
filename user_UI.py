@@ -191,13 +191,11 @@ def option(df):
     return df.sort_values(by='start_time',inplace=False)
 
 
-def readcsv(file,todo_daily_file,isexpand=False): #读文件 ，并生成树状结构
+def convert_to_tree(df):
     todoTree = sg.TreeData()
-    df = daily.init(file,todo_daily_file)
-    df=option(df)
-    df1=df[pd.isna(df['father'])]
+    df1 = df[pd.isna(df['father'])]
     while not df1.empty:
-        keyset=[]
+        keyset = []
         for i in df1.index:
             parent = df.at[i, "father"]
             key = df.at[i, "id"]
@@ -208,10 +206,20 @@ def readcsv(file,todo_daily_file,isexpand=False): #读文件 ，并生成树状�
                 todoTree.insert('', key, text, [ddl])
             else:
                 todoTree.insert(parent, key, text, [ddl])
-        df1= pd.DataFrame()
+        df1 = pd.DataFrame()
         for k in keyset:
-            df2=df[df["father"]==k]
-            df1=pd.concat([df1,df2],axis=0)
+            df2 = df[df["father"] == k]
+            df1 = pd.concat([df1, df2], axis=0)
+    return todoTree
+
+def readcsv(file,todo_daily_file,isexpand=False): #读文件 ，并生成树状结构
+
+    df = daily.init(file, todo_daily_file)
+    df = df[np.logical_not(np.isnan(df["start_time"]))]
+    todoTree=convert_to_tree(df)
+    df = option(df)
+
+
 
 
 
@@ -245,9 +253,33 @@ def readcsv(file,todo_daily_file,isexpand=False): #读文件 ，并生成树状�
         [sg.Input(key='IN')],
         [sg.Button('add'),sg.Button('clear'),sg.Button('clear all')],
         [sg.Button('delete'),sg.Button('revise')],
-        [sg.Button('start')]
+        [sg.Button('start'),sg.Button('inbox')]
     ]
     return df,todoTree,layout
+
+def readinbox(file,isexpand=False):
+    df = pd.read_csv(file)
+    df[np.isnan(df["num"]) | df['num'] == 0]
+    todoTree = convert_to_tree(df)
+    df = option(df)
+    layout = [
+        [sg.Button('cancel')],
+        [sg.Tree(data=todoTree, headings=['截止日期', ],
+                 auto_size_columns=True,
+                 select_mode=sg.TABLE_SELECT_MODE_BROWSE,
+                 num_rows=20,
+                 col0_width=40,
+                 key='TREE',
+                 show_expanded=isexpand,
+                 enable_events=True,
+                 expand_x=True,
+                 expand_y=True,right_click_menu=sg.MENU_RIGHT_CLICK_EDITME_EXIT)],
+        [sg.Input(key='IN')],
+        [sg.Button('add'),sg.Button('clear'),sg.Button('clear all')],
+        [sg.Button('delete'),sg.Button('revise')],
+        [sg.Button('insert')]
+    ]
+    return df, todoTree, layout
 
 def delete_in_tree(df,file,values,window): #直接删除主todo里的内容
     df=pd.read_csv(file)# 删除树状图里面的内容
@@ -290,6 +322,9 @@ def finished_delete(df,file,values,todo_daily): # 任务结束后删除内容
                 # update,start_time
                 start_time=time.mktime((datetime.fromtimestamp(start_time)+timedelta(days=gap)).timetuple())
                 df.at[index_with_content,'start_time']=start_time
+            else:
+                start_time=time.mktime((time.time()+timedelta(days=gap)).timetuple())
+                df.at[index_with_content, 'start_time'] = start_time
             if np.isnan(num_of_sub) or num_of_sub==0:
                 df=df
             if num_of_sub >=2:
@@ -368,18 +403,27 @@ def main():
     Path('./dailytodo').mkdir(parents=True, exist_ok=True)
     daily_name = Path(todo_daily_file, date.today().isoformat()).with_suffix(".csv")
 
+
     df,todoTree,layout=readcsv(file,todo_daily_file)
 
 
     window = sg.Window('用户输入部分', layout,finalize=True,return_keyboard_events=True,resizable=True,auto_size_text=True)
+    inboxdf, inboxtodoTree, inboxlayout = readinbox(file)
+    inboxwindow = sg.Window('inbox', inboxlayout,finalize=True)
+
+
+
     current_task=Task()
 
 
     while True:     # Event Loop
 
-        event, values = window.read()
+        event, values = window.read(timeout=10)
+        inboxevent, inboxvalues = inboxwindow.read(timeout=1)
+
         element=window.find_element_with_focus()
-        print(event,values,element)
+        if event!="__TIMEOUT__":
+            print(event,values,element)
 
         if event in (sg.WIN_CLOSED, 'cancel','Escape:27'):
             break
@@ -460,6 +504,26 @@ def main():
             add_content(values['TREE'], df, file,daily_name)
             df, todoTree, layout = readcsv(file,todo_daily_file)
             window['TREE'].update(todoTree)
+        if inboxevent in ('insert'):
+            origin = pd.read_csv(file)
+
+
+
+            origin.at[find('id', inboxvalues['TREE'][0], origin)[0],'start_time']=time.time()
+            origin.to_csv(file,index=False)
+            df, todoTree, layout = readcsv(file, todo_daily_file)
+            window['TREE'].update(todoTree)
+            inboxdf, inboxtodoTree, inboxlayout = readinbox(file)
+            inboxwindow['TREE'].update(inboxtodoTree)
+
+
+            inboxevent=None
+
+
+
+
+
+
 
 
 
